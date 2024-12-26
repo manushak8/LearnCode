@@ -11,11 +11,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-//import androidx.core.graphics.Insets;
-//import androidx.core.view.ViewCompat;
-//import androidx.core.view.WindowInsetsCompat;
-//import com.google.firebase.auth.FirebaseUser;
-//import androidx.activity.EdgeToEdge;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -25,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class Register extends AppCompatActivity {
+
     TextInputEditText editTextEmail, editTextPassword;
     Button buttonReg;
     FirebaseAuth mAuth;
@@ -35,7 +31,7 @@ public class Register extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
+        if(currentUser != null) {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
             finish();
@@ -46,30 +42,33 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register2);
+
         mAuth = FirebaseAuth.getInstance();
         editTextEmail = findViewById(R.id.emil);
         editTextPassword = findViewById(R.id.password);
         buttonReg = findViewById(R.id.btn_register);
         progressBar = findViewById(R.id.progressBar);
         textView = findViewById(R.id.loginNow);
-        textView.setOnClickListener(view -> startActivity(new Intent(this, login.class)));
 
+        textView.setOnClickListener(view -> startActivity(new Intent(this, login.class)));
 
         buttonReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
-                String email, password;
-                email = String.valueOf(editTextEmail.getText());
-                password = String.valueOf(editTextPassword.getText());
 
-                if (TextUtils.isEmpty(email)){
+                String email = String.valueOf(editTextEmail.getText());
+                String password = String.valueOf(editTextPassword.getText());
+
+                if (TextUtils.isEmpty(email)) {
                     Toast.makeText(Register.this, "Enter email", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
                     return;
                 }
 
-                if (TextUtils.isEmpty(password)){
+                if (TextUtils.isEmpty(password)) {
                     Toast.makeText(Register.this, "Enter password", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
                     return;
                 }
 
@@ -80,16 +79,32 @@ public class Register extends AppCompatActivity {
                                 progressBar.setVisibility(View.GONE);
 
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(Register.this, "Account created",
-                                            Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(getApplicationContext(), login.class);
-                                    startActivity(intent);
-                                    finish();
+                                    FirebaseUser user = mAuth.getCurrentUser();
 
+                                    // Send email verification to the user
+                                    if (user != null) {
+                                        user.sendEmailVerification()
+                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if (task.isSuccessful()) {
+                                                            Toast.makeText(Register.this,
+                                                                    "Account created. Please go to your email for verification.",
+                                                                    Toast.LENGTH_LONG).show();
+
+                                                            startActivity(new Intent(Register.this, login.class));
+                                                            finish();
+                                                        } else {
+                                                            Toast.makeText(Register.this,
+                                                                    "Failed to send verification email.",
+                                                                    Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
+                                                });
+                                    }
                                 } else {
                                     Toast.makeText(Register.this, "Authentication failed.",
                                             Toast.LENGTH_SHORT).show();
-
                                 }
                             }
                         });

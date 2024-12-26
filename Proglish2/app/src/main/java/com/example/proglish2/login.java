@@ -9,10 +9,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-//import androidx.activity.EdgeToEdge;
-//import androidx.core.graphics.Insets;
-//import androidx.core.view.ViewCompat;
-//import androidx.core.view.WindowInsetsCompat;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,7 +18,6 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
 
 public class login extends AppCompatActivity {
 
@@ -37,9 +32,15 @@ public class login extends AppCompatActivity {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-            finish();
+            // Check if email is verified
+            if (currentUser.isEmailVerified()) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                mAuth.signOut(); // Log out if email is not verified
+                Toast.makeText(this, "Please verify your email.", Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -54,23 +55,25 @@ public class login extends AppCompatActivity {
         buttonLogin = findViewById(R.id.btn_login);
         progressBar = findViewById(R.id.progressBar);
         textView = findViewById(R.id.registerNow);
+
         textView.setOnClickListener(view -> startActivity(new Intent(this, Register.class)));
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
-                String email, password;
-                email = String.valueOf(editTextEmail.getText());
-                password = String.valueOf(editTextPassword.getText());
+                String email = String.valueOf(editTextEmail.getText());
+                String password = String.valueOf(editTextPassword.getText());
 
-                if (TextUtils.isEmpty(email)){
+                if (TextUtils.isEmpty(email)) {
                     Toast.makeText(login.this, "Enter email", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
                     return;
                 }
 
-                if (TextUtils.isEmpty(password)){
+                if (TextUtils.isEmpty(password)) {
                     Toast.makeText(login.this, "Enter password", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
                     return;
                 }
 
@@ -80,21 +83,23 @@ public class login extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 progressBar.setVisibility(View.GONE);
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(login.this, "Login successful",
-                                            Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                    startActivity(intent);
-                                    finish();
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    if (user != null && user.isEmailVerified()) {
+                                        Toast.makeText(login.this, "Login successful", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    } else {
+                                        mAuth.signOut();
+                                        Toast.makeText(login.this, "Please verify your email.", Toast.LENGTH_LONG).show();
+                                    }
                                 } else {
-                                    Toast.makeText(login.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
 
+                                    Toast.makeText(login.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
             }
         });
-
-
     }
 }
