@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "25553966933",
+    "project_id": "proglish-8a0ef",
+    "storage_bucket": "proglish-8a0ef.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:25553966933:android:31d20bc005d768958dc1dc",
+        "android_client_info": {
+          "package_name": "com.example.proglish2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqP0-yZl0Cgd1p5r46qpvMQS0G44RhkZ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
