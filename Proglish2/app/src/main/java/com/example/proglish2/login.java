@@ -32,13 +32,12 @@ public class login extends AppCompatActivity {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
-            // Check if email is verified
             if (currentUser.isEmailVerified()) {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
                 finish();
             } else {
-                mAuth.signOut(); // Log out if email is not verified
+                mAuth.signOut();
                 Toast.makeText(this, "Please verify your email.", Toast.LENGTH_LONG).show();
             }
         }
@@ -50,7 +49,7 @@ public class login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
-        editTextEmail = findViewById(R.id.emil);
+        editTextEmail = findViewById(R.id.email);
         editTextPassword = findViewById(R.id.password);
         buttonLogin = findViewById(R.id.btn_login);
         progressBar = findViewById(R.id.progressBar);

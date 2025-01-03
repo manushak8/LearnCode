@@ -1,10 +1,19 @@
 <resources>
-    <string name="app_name">Proglish2</string>
-    <string name="login">login</string>
-    <string name="email">Email</string>
-    <string name="password">Password</string>
-    <string name="register">Register</string>
-    <string name="click_to_login">Click to login</string>
-    <string name="click_to_register">Click to register</string>
+    <string name="app_name">Proglish</string>
+    <string name="login">Login</string>
+    <string name="email">Enter your email</string>
+    <string name="password">Enter your password</string>
+    <string name="signUp">Signup</string>
+    <string name="click_to_login">Already have an account? Login</string>
+    <string name="click_to_register">Don\'t have an account?  Signup </string>
     <string name="logout">Logout</string>
+    <string name="welcome_back">Welcome back!</string>
+    <string name="welcome">"Welcome, "</string>
+    <string-array name="lessons">
+        <item>Lesson 1</item>
+        <item>Lesson 2</item>
+        <item>Lesson 3</item>
+        <item>Lesson 4</item>
+        <item>Lesson 5</item>
+    </string-array>
 </resources>

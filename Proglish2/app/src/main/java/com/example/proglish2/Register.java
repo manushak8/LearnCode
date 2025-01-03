@@ -27,13 +27,14 @@ public class Register extends AppCompatActivity {
     ProgressBar progressBar;
     TextView textView;
 
+
     @Override
     public void onStart() {
         super.onStart();
+        mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null) {
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
+        if (currentUser != null) {
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
             finish();
         }
     }
@@ -44,7 +45,7 @@ public class Register extends AppCompatActivity {
         setContentView(R.layout.activity_register2);
 
         mAuth = FirebaseAuth.getInstance();
-        editTextEmail = findViewById(R.id.emil);
+        editTextEmail = findViewById(R.id.email);
         editTextPassword = findViewById(R.id.password);
         buttonReg = findViewById(R.id.btn_register);
         progressBar = findViewById(R.id.progressBar);
