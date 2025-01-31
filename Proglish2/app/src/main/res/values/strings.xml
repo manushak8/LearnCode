@@ -10,6 +10,7 @@
     <string name="welcome_back">Welcome back!</string>
     <string name="welcome">"Welcome, "</string>
     <string name="lesson">"Lesson 1"</string>
+    <string name="confirm_password">"Confirm password"</string>
     <string-array name="lessons">
         <item>Lesson 1</item>
         <item>Lesson 2</item>

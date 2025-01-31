@@ -1,6 +1,7 @@
 package com.example.proglish2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,13 @@ public class RecyclerViweAdapter extends RecyclerView.Adapter<RecyclerViweAdapte
     @Override
     public void onBindViewHolder(@NonNull RecyclerViweAdapter.MyViewHolder holder, int position) {
         holder.textView.setText(lessonsModels.get(position).getLessonNumber());
+        LessonsModel currentLesson = lessonsModels.get(position);
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, LessonsDescription.class);
+            intent.putExtra("lesson", currentLesson);
+            context.startActivity(intent);
+        });
     }
 
     @Override
