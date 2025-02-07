@@ -4,14 +4,22 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     tools:context=".LessonsDescription">
 
     <TextView
-        android:id="@+id/lessonNumberTextView"
+        android:id="@+id/lessonName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Lesson Number"/>
+        android:text="Lesson Name"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/lessonDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lesson Description"
+        android:textSize="16sp" />
 
 
 

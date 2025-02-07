@@ -4,18 +4,31 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class LessonsModel implements Parcelable {
-    private String lessonNumber;
+    private String lessonID;
+    private String lessonName;
+    private String lessonDescription;
 
-    public LessonsModel(String lessonNumber) {
-        this.lessonNumber = lessonNumber;
+    public LessonsModel(String lessonID, String lessonName, String lessonDescription) {
+        this.lessonID = lessonID;
+        this.lessonName = lessonName;
+        this.lessonDescription = lessonDescription;
     }
 
     protected LessonsModel(Parcel in) {
-        lessonNumber = in.readString();
+        lessonID = in.readString();
+        lessonName = in.readString();
+        lessonDescription = in.readString();
     }
 
-    public String getLessonNumber() {
-        return lessonNumber;
+    public String getLessonID() {
+        return lessonID;
+    }
+    public String getLessonName() {
+        return lessonName;
+    }
+
+    public String getLessonDescription() {
+        return lessonDescription;
     }
 
     public static final Creator<LessonsModel> CREATOR = new Creator<LessonsModel>() {
@@ -32,7 +45,10 @@ public class LessonsModel implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int flags) {
-        parcel.writeString(lessonNumber);
+        parcel.writeString(lessonID);
+        parcel.writeString(lessonName);
+        parcel.writeString(lessonDescription);
+
     }
 
     @Override

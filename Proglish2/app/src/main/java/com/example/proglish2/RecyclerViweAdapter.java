@@ -32,12 +32,12 @@ public class RecyclerViweAdapter extends RecyclerView.Adapter<RecyclerViweAdapte
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViweAdapter.MyViewHolder holder, int position) {
-        holder.textView.setText(lessonsModels.get(position).getLessonNumber());
+        holder.textView.setText(lessonsModels.get(position).getLessonName());
         LessonsModel currentLesson = lessonsModels.get(position);
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, LessonsDescription.class);
-            intent.putExtra("lesson", currentLesson);
+            intent.putExtra("lessonID", currentLesson.getLessonID());
             context.startActivity(intent);
         });
     }

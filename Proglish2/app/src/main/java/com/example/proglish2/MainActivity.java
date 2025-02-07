@@ -2,6 +2,7 @@ package com.example.proglish2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -13,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 
@@ -43,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
                 redirectToLogin();
             } else {
                 if (user.isEmailVerified()) {
-                    setUpLessonsModels();
+                    fetchLessonsFromFirestore();
                     RecyclerViweAdapter adapter = new RecyclerViweAdapter(this, lessonsModels, this);
                     recyclerView.setAdapter(adapter);
                     recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -72,21 +75,48 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
         finish();
     }
 
+    private void fetchLessonsFromFirestore() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Lessons")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        lessonsModels.clear();
 
-    private void setUpLessonsModels() {
-        String[] names = getResources().getStringArray(R.array.lessons);
-        for (int i = 0; i < names.length; i++) {
-            lessonsModels.add(new LessonsModel(names[i]));
-        }
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            String lessonName = document.getString("name");
+                            String description = document.getString("description");
+                            String lessonID = document.getString("lessonID");
+
+                            if (lessonName != null && description != null) {
+                                lessonsModels.add(new LessonsModel(lessonName, description, lessonID));
+                            } else {
+                                Log.e("Firestore", "Missing data for document: " + document.getId());
+                            }
+                        }
+
+                        RecyclerViweAdapter adapter = new RecyclerViweAdapter(this, lessonsModels, this);
+                        RecyclerView recyclerView = findViewById(R.id.mRecyclerView);
+                        recyclerView.setAdapter(adapter);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+                    } else {
+                        Log.e("Firestore", "Error getting lessons", task.getException());
+                        Toast.makeText(this, "Error getting lessons.", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
+
     @Override
     public void onItemClick(int position) {
-        Intent intent = new Intent(MainActivity.this, LessonsDescription.class);
-
-        LessonsModel selectedLesson = lessonsModels.get(position);
-        intent.putExtra("lesson", selectedLesson);
-        startActivity(intent);
-
+        String lessonID = lessonsModels.get(position).getLessonID();
+        if (lessonID != null) {
+            Intent intent = new Intent(MainActivity.this, LessonsDescription.class);
+            intent.putExtra("lessonID", lessonID);
+            startActivity(intent);
+        } else {
+            Log.e("MainActivity", "Lesson ID is null for position: " + position);
+        }
     }
-}
 
+}

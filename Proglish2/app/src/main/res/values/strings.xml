@@ -11,11 +11,23 @@
     <string name="welcome">"Welcome, "</string>
     <string name="lesson">"Lesson 1"</string>
     <string name="confirm_password">"Confirm password"</string>
+    <!--
     <string-array name="lessons">
         <item>Lesson 1</item>
         <item>Lesson 2</item>
         <item>Lesson 3</item>
         <item>Lesson 4</item>
         <item>Lesson 5</item>
+        <item>Lesson 6</item>
     </string-array>
+
+    <string-array name="lesson_descriptions">
+        <item>Description for Lesson 1</item>
+        <item>Description for Lesson 2</item>
+        <item>Description for Lesson 3</item>
+        <item>Description for Lesson 4</item>
+        <item>Description for Lesson 5</item>
+        <item>Description for Lesson 6</item>
+         ...
+    </string-array> -->
 </resources>
