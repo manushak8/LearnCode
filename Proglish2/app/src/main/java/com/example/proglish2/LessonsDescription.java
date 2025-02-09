@@ -8,6 +8,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LessonsDescription extends AppCompatActivity {
@@ -20,39 +21,49 @@ public class LessonsDescription extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lessons_description);
 
+        db = FirebaseFirestore.getInstance();
+        lessonNameTextView = findViewById(R.id.lessonName);
+        lessonDescriptionTextView = findViewById(R.id.lessonDescription);
+
         String lessonID = getIntent().getStringExtra("lessonID");
 
         if (lessonID != null) {
-            Log.d("LessonsDescription", "Received lesson ID: " + lessonID);
-
-            DocumentReference documentReference = FirebaseFirestore.getInstance().collection("Lessons").document(lessonID);
-            documentReference.get().addOnSuccessListener(documentSnapshot -> {
-                if (documentSnapshot.exists()) {
-                    String lessonName = documentSnapshot.getString("name");
-                    String description = documentSnapshot.getString("description");
-
-                    if (lessonName != null && description != null) {
-                        lessonNameTextView = findViewById(R.id.lessonName);
-                        lessonDescriptionTextView = findViewById(R.id.lessonDescription);
-
-                        lessonNameTextView.setText(lessonName);
-                        lessonDescriptionTextView.setText(description);
-                    } else {
-                        Log.e("LessonsDescription", "Lesson name or description is null.");
-                        Toast.makeText(this, "Missing lesson details", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Log.e("LessonsDescription", "Document does not exist!");
-                    Toast.makeText(this, "Lesson not found", Toast.LENGTH_SHORT).show();
-                }
-            }).addOnFailureListener(e -> {
-                Log.e("LessonsDescription", "Error getting document", e);
-                Toast.makeText(this, "Error loading lesson", Toast.LENGTH_SHORT).show();
-            });
-
-        } else {
-            Log.e("LessonsDescription", "No lesson ID received!");
-            Toast.makeText(this, "No lesson ID received!", Toast.LENGTH_SHORT).show();
+            loadUserDetails(lessonID);
+        }else {
+            Log.e("DocumentError", "No such document");
         }
+
+
+        /*db.collection("Lessons").document(lessonID).get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            String lessonName = document.getString("name");
+                            String lessonDescription = document.getString("description");
+
+                            lessonNameTextView.setText(lessonName);
+                            lessonDescriptionTextView.setText(lessonDescription);
+                        } else {
+                            Toast.makeText(LessonsDescription.this, "No such document", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(LessonsDescription.this, "Error getting document", Toast.LENGTH_SHORT).show();
+                    }
+                });*/
+
+    }
+
+    private void loadUserDetails(String lessonID) {
+        DocumentReference docRef = db.collection("Lessons").document(lessonID);
+        docRef.get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                String name = documentSnapshot.getString("name");
+                String description = documentSnapshot.getString("description");
+
+                lessonNameTextView.setText(name);
+                lessonDescriptionTextView.setText(description);
+            }
+        });
     }
 }
