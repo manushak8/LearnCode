@@ -10,4 +10,8 @@
         <item name="android:activityOpenEnterAnimation">@anim/slide_in_rigth</item>
         <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
     </style>
+
+    <style name="ProgressBar">
+        <item name="colorSecondary">@color/white</item>
+    </style>
 </resources>

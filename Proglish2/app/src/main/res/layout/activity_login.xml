@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/welcome_back"
-        android:textSize="28sp"
+        android:textSize="@dimen/_28sdp"
         android:textStyle="bold"
         android:gravity="center" />
 
@@ -21,10 +21,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/login"
-        android:textSize="28sp"
+        android:textSize="@dimen/_28sdp"
         android:textStyle="bold"
         android:gravity="center"
-        android:layout_marginBottom="58dp"/>
+        android:layout_marginBottom="@dimen/_58sdp"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -57,16 +57,16 @@
 
     <Button
         android:id="@+id/btn_login"
-        android:layout_margin="25dp"
+        android:layout_margin="@dimen/_25sdp"
         android:text="@string/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <TextView
         android:textStyle="bold"
-        android:textSize="20sp"
+        android:textSize="@dimen/_15sdp"
         android:gravity="center"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="@dimen/_28sdp"
         android:id="@+id/registerNow"
         android:text="@string/click_to_register"
         android:textColor="@android:color/holo_blue_dark"

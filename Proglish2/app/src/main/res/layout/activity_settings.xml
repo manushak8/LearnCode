@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Settings"
-        android:textSize="36sp"
+        android:textSize="@dimen/_36sdp"
         android:layout_centerInParent="true">
     </TextView>
 
@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        app:itemIconSize="40dp"
+        app:itemIconSize="@dimen/_30sdp"
         app:menu="@menu/botton_nav_menu">
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
