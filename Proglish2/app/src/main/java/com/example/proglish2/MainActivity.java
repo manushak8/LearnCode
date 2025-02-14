@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
     FirebaseAuth auth;
     FirebaseUser user;
     Button button;
-
+    BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
         button = findViewById(R.id.button);
         user = auth.getCurrentUser();
         RecyclerView recyclerView = findViewById(R.id.mRecyclerView);
+        bottomNavigationView = findViewById(R.id.BottomNavigationView);
         if (user == null){
             Intent intent = new Intent(getApplicationContext(), login.class);
             startActivity(intent);
@@ -50,6 +52,26 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
                     RecyclerViweAdapter adapter = new RecyclerViweAdapter(this, lessonsModels, this);
                     recyclerView.setAdapter(adapter);
                     recyclerView.setLayoutManager(new LinearLayoutManager(this));
+                    bottomNavigationView.setSelectedItemId(R.id.home);
+
+                    bottomNavigationView.setOnItemSelectedListener(item -> {
+                        int itemId = item.getItemId();
+                        if (itemId == R.id.home) {
+                            return true;
+                        } else if (itemId == R.id.quiz) {
+                            startActivity(new Intent(getApplicationContext(), QuizActivity.class));
+                            overridePendingTransition(R.anim.slide_in_rigth, R.anim.slide_out_left);
+                            finish();
+                            return true;
+                        } else if (itemId == R.id.settings) {
+                            startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+                            overridePendingTransition(R.anim.slide_in_rigth, R.anim.slide_out_left);
+                            finish();
+                            return true;
+                        }
+                        return false;
+                    });
+
                 } else {
                     FirebaseAuth.getInstance().signOut();
                     Toast.makeText(this, "Please verify your email before logging in.", Toast.LENGTH_LONG).show();
