@@ -7,13 +7,20 @@
     android:layout_height="match_parent"
     tools:context=".QuizActivity">
 
-    <TextView
+    <!-- <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Quiz"
         android:textSize="@dimen/_36sdp"
         android:layout_centerInParent="true">
     </TextView>
+    -->
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Start"/>
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

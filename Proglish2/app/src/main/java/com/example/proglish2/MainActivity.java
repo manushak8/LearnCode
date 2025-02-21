@@ -31,7 +31,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
+
         auth = FirebaseAuth.getInstance();
         button = findViewById(R.id.button);
         user = auth.getCurrentUser();
@@ -59,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
                         if (itemId == R.id.home) {
                             return true;
                         } else if (itemId == R.id.quiz) {
-                            startActivity(new Intent(getApplicationContext(), QuizActivity.class));
+                            startActivity(new Intent(getApplicationContext(), DashboardActivity.class)); //change to QuizActivity
                             overridePendingTransition(R.anim.slide_in_rigth, R.anim.slide_out_left);
                             finish();
                             return true;

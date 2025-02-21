@@ -15,6 +15,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_settings);
 
         bottomNavigationView = findViewById(R.id.BottomNavigationView);
@@ -27,7 +28,7 @@ public class SettingsActivity extends AppCompatActivity {
                 finish();
                 return true;
             } else if (itemId == R.id.quiz) {
-                startActivity(new Intent(getApplicationContext(), QuizActivity.class));
+                startActivity(new Intent(getApplicationContext(), DashboardActivity.class)); //change to QuizActivity
                 overridePendingTransition(R.anim.slide_in_rigth, R.anim.slide_out_left);
                 finish();
                 return true;
