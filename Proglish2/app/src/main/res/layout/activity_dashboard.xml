@@ -52,6 +52,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:layout_gravity="center"
+            android:gravity="center"
             android:text="question">
 
         </TextView>
@@ -60,6 +61,7 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardA"
+        android:onClick="optionAClick"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
         app:cardCornerRadius="@dimen/_10sdp"
@@ -81,6 +83,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:onClick="optionBClick"
         android:id="@+id/cardB"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
@@ -104,6 +107,7 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardC"
+        android:onClick="optionCClick"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
         app:cardCornerRadius="@dimen/_10sdp"
@@ -126,6 +130,7 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardD"
+        android:onClick="optionDClick"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
         app:cardCornerRadius="@dimen/_10sdp"
@@ -147,6 +152,7 @@
     </androidx.cardview.widget.CardView>
 
     <LinearLayout
+        android:id="@+id/next_btn"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
         android:layout_marginTop="@dimen/_50sdp"

@@ -15,7 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Material3.Light"
         tools:targetApi="31">
-
+        <activity
+            android:name=".WonActivity"
+            android:exported="false" />
         <activity
             android:name=".DashboardActivity"
             android:exported="false" />
@@ -44,9 +46,7 @@
         <activity
             android:name=".login"
             android:exported="true"
-            android:theme="@style/Theme.Material3.Light.NoActionBar">
-
-        </activity>
+            android:theme="@style/Theme.Material3.Light.NoActionBar"></activity>
         <activity
             android:name=".MainActivity"
             android:exported="true" />
