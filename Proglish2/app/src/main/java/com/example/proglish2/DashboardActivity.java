@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 
-import java.util.Collection;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -105,6 +105,8 @@ public class DashboardActivity extends AppCompatActivity {
 
     private void gameWon() {
         Intent intent = new Intent(DashboardActivity.this, WonActivity.class);
+        intent.putExtra("correct", correctCount);
+        intent.putExtra("wrong", wrongCount);
         startActivity(intent);
 
     }

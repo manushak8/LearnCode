@@ -45,6 +45,8 @@ dependencies {
     implementation(libs.firebase.database)
     implementation(libs.firebase.firestore)
     implementation("com.intuit.sdp:sdp-android:1.1.1")
+    implementation("com.mikhaellopez:circularprogressbar:3.1.0")
+    implementation(libs.cardview)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
