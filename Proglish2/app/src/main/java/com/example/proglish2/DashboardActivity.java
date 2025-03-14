@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,8 +24,9 @@ public class DashboardActivity extends AppCompatActivity {
     List<QuizModel> allQuestionsList;
     QuizModel quizModel;
     int index = 0;
-    TextView card_question, optionA, optionB, optionC, optionD;
+    TextView card_question, optionA, optionB, optionC, optionD, exit;
     CardView cardOA, cardOB, cardOC, cardOD;
+    ImageView backImageView;
     int correctCount = 0;
     int wrongCount = 0;
     LinearLayout nextBtn;
@@ -42,6 +44,25 @@ public class DashboardActivity extends AppCompatActivity {
         resetColor();
         nextBtn.setClickable(false);
         setAllData();
+
+        exit.setOnClickListener(v -> {
+            Intent intent = new Intent(DashboardActivity.this, QuizActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        backImageView.setOnClickListener(v -> {
+            if (index > 0) {
+                index--;
+                quizModel = allQuestionsList.get(index);
+                resetColor();
+                setAllData();
+                enableBtn();
+            } else {
+                finish();
+            }
+        });
+
     }
 
     private void setAllData() {
@@ -65,6 +86,8 @@ public class DashboardActivity extends AppCompatActivity {
         cardOD = findViewById(R.id.cardD);
 
         nextBtn = findViewById(R.id.next_btn);
+        exit = findViewById(R.id.exit_ic);
+        backImageView = findViewById(R.id.back_ic);
     }
 
     public void correct(CardView cardView){

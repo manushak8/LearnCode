@@ -22,7 +22,9 @@
             android:background="@drawable/back_ic"
             android:backgroundTint="@color/white"
             android:layout_centerVertical="true"
-            app:tint="@color/white"/>
+            app:tint="@color/white"
+            android:clickable="true"
+            android:focusable="true"/>
 
         <TextView
             android:id="@+id/exit_ic"
@@ -33,7 +35,9 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/_10sdp"
             android:textColor="@color/white"
-            android:textSize="@dimen/_18sdp"/>
+            android:textSize="@dimen/_18sdp"
+            android:clickable="true"
+            android:focusable="true"/>
 
     </RelativeLayout>
 

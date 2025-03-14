@@ -22,93 +22,93 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         listOfQuestions = new ArrayList<>();
         listOfQuestions.add(new QuizModel(
-                "What does 'API' stand for?",
-                "A) Application Programming Interface",
-                "B) Advanced Program Integration",
-                "C) Automated Process Interaction",
-                "D) Application Process Interface",
-                "A) Application Programming Interface"
+                "Что такое variable в программированин?",
+                "A) Тип данных",
+                "B) Функция",
+                "C) Именованная область памяти ",
+                "D)  Операционная система",
+                "C) Именованная область памяти "
         ));
 
         listOfQuestions.add(new QuizModel(
-                "Which data structure uses LIFO (Last In, First Out)?",
-                "A) Queue",
-                "B) Stack",
-                "C) Linked List",
-                "D) Array",
-                "B) Stack"
+                " Для чего нужна функция(Function)?",
+                "A) Для выполнения определённой задачи",
+                "B) Для хранения данных",
+                "C) Для работы с интернетом",
+                "D) Для обработки изображений",
+                "A) Для выполнения определённой задачи"
         ));
 
         listOfQuestions.add(new QuizModel(
-                "What does 'IDE' stand for in software development?",
-                "A) Integrated Development Environment",
-                "B) Internal Debugging Engine",
-                "C) Intelligent Data Execution",
-                "D) Interactive Design Editor",
-                "A) Integrated Development Environment"
+                "Чем method отличается от function?",
+                "A) Метод работает только с числами",
+                "B) Метод принадлежит классу или объекту",
+                "C) Метод используется только в Java",
+                "D) Метод – это то же самое, что и переменная",
+                "B) Метод принадлежит классу или объекту"
         ));
 
         listOfQuestions.add(new QuizModel(
-                "Which SQL command is used to retrieve data from a database?",
-                "A) INSERT",
-                "B) UPDATE",
-                "C) DELETE",
-                "D) SELECT",
-                "D) SELECT"
+                "Что такое parameter функции?",
+                "A) Выходные данные функции",
+                "B) Переменная, принимаемая функцией",
+                "C) Описание функции",
+                "D) Часть операционной системы",
+                "B) Переменная, принимаемая функцией"
         ));
 
         listOfQuestions.add(new QuizModel(
-                "What is the primary function of a compiler?",
-                "A) To execute code directly",
-                "B) To translate code into machine language",
-                "C) To debug software",
-                "D) To manage memory allocation",
-                "B) To translate code into machine language"
+                "Чем argument отличается от parameter?",
+                "A) Аргумент всегда равен нулю",
+                "B) Аргумент и параметр – это одно и то же",
+                "C) Аргумент – это только строки",
+                "D) Аргумент – это передаваемое значение параметру",
+                "D) Аргумент – это передаваемое значение параметру"
         ));
 
         listOfQuestions.add(new QuizModel(
-                "What does 'OOP' stand for in programming?",
-                "A) Object-Oriented Programming",
-                "B) Online Operational Processing",
-                "C) Optimized Object Parsing",
-                "D) Overloaded Operator Processing",
-                "A) Object-Oriented Programming"
+                "Для чего используется inheritance  в ООП?",
+                "A) Для передачи свойств и методов от родительского класса",
+                "B) Для удаления ненужных объектов",
+                "C) Для хранения данных",
+                "D) Для работы с сетью",
+                "A) Для передачи свойств и методов от родительского класса"
         ));
 
         listOfQuestions.add(new QuizModel(
-                "Which of the following is NOT a programming language?",
-                "A) Python",
-                "B) JavaScript",
-                "C) HTML",
-                "D) C++",
-                "C) HTML"
+                ": Что такое Class  в ООП?",
+                "A) Переменная",
+                "B) Файл с кодом",
+                "C) Шаблон для создания объектов",
+                "D) Встроенная функция",
+                "C) Шаблон для создания объектов"
         ));
 
         listOfQuestions.add(new QuizModel(
-                "What is the purpose of a version control system like Git?",
-                "A) To run multiple programs at once",
-                "B) To manage changes in source code",
-                "C) To speed up code execution",
-                "D) To check for syntax errors",
-                "B) To manage changes in source code"
+                " Что такое Object  в ООП?",
+                "A) Функция",
+                "B) Экземпляр класса",
+                "C) Операционная система",
+                "D)  Файл программы",
+                "B) Экземпляр класса"
         ));
 
         listOfQuestions.add(new QuizModel(
-                "Which of the following is a frontend JavaScript framework?",
-                "A) React",
-                "B) Django",
-                "C) Flask",
-                "D) Spring",
-                "A) React"
+                "Какова роль return в функции?",
+                "A) Возвращает результат работы функции",
+                "B) Останавливает выполнение программы",
+                "C) Вызывает другую функцию",
+                "D) Удаляет переменную",
+                "A) Возвращает результат работы функции"
         ));
 
         listOfQuestions.add(new QuizModel(
-                "What is the main purpose of a database index?",
-                "A) To store backup copies",
-                "B) To speed up search queries",
-                "C) To increase data security",
-                "D) To reduce storage space",
-                "B) To speed up search queries"
+                "Что определяет тип данных?",
+                "A) Только имя переменной",
+                "B) Формат и допустимые операции с данными",
+                "C) Только размер переменной в памяти",
+                "D) Только язык программирования",
+                "B) Формат и допустимые операции с данными"
         ));
 
 
