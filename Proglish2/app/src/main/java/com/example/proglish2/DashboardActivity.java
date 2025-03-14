@@ -34,7 +34,7 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_dashboard);
-        
+
         hooks();
         allQuestionsList = listOfQuestions;
         Collections.shuffle(allQuestionsList);
@@ -190,7 +190,7 @@ public class DashboardActivity extends AppCompatActivity {
             cardOD.setCardBackgroundColor(getResources().getColor(R.color.green));
 
             if(index < allQuestionsList.size() - 1){
-               correct(cardOD);
+                correct(cardOD);
             }else {
                 gameWon();
             }

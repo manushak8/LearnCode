@@ -28,7 +28,7 @@ public class SettingsActivity extends AppCompatActivity {
                 finish();
                 return true;
             } else if (itemId == R.id.quiz) {
-                startActivity(new Intent(getApplicationContext(), DashboardActivity.class)); //change to QuizActivity
+                startActivity(new Intent(getApplicationContext(), QuizActivity.class));
                 overridePendingTransition(R.anim.slide_in_rigth, R.anim.slide_out_left);
                 finish();
                 return true;

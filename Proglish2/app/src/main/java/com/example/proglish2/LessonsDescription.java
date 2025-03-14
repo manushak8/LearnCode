@@ -6,14 +6,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import java.util.ArrayList;
 
 public class LessonsDescription extends AppCompatActivity {
     private TextView lessonNameTextView, lessonDescriptionTextView;
     private FirebaseFirestore db;
+
+    ArrayList<LessonsModel> lessonsModels = new ArrayList<>();
 
 
     @Override
@@ -28,42 +35,59 @@ public class LessonsDescription extends AppCompatActivity {
         String lessonID = getIntent().getStringExtra("lessonID");
 
         if (lessonID != null) {
-            loadUserDetails(lessonID);
+            loadDetails();
         }else {
             Log.e("DocumentError", "No such document");
         }
 
+    }
 
-        /*db.collection("Lessons").document(lessonID).get()
+    private void loadDetails() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Lessons")
+                .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
+                        lessonsModels.clear();
+
+                        for (QueryDocumentSnapshot document : task.getResult()) {
                             String lessonName = document.getString("name");
-                            String lessonDescription = document.getString("description");
+                            String description = document.getString("description");
+                            String lessonID = document.getString("lessonID");
 
-                            lessonNameTextView.setText(lessonName);
-                            lessonDescriptionTextView.setText(lessonDescription);
-                        } else {
-                            Toast.makeText(LessonsDescription.this, "No such document", Toast.LENGTH_SHORT).show();
+                            if (lessonName != null && description != null) {
+                                lessonsModels.add(new LessonsModel(lessonID, lessonName, description));
+                            } else {
+                                Log.e("Firestore", "Missing data for document: " + document.getId());
+                            }
                         }
+
                     } else {
-                        Toast.makeText(LessonsDescription.this, "Error getting document", Toast.LENGTH_SHORT).show();
+                        Log.e("Firestore", "Error getting lessons", task.getException());
+                        Toast.makeText(this, "Error getting lessons.", Toast.LENGTH_SHORT).show();
                     }
-                });*/
-
+                });
     }
 
-    private void loadUserDetails(String lessonID) {
-        DocumentReference docRef = db.collection("Lessons").document(lessonID);
-        docRef.get().addOnSuccessListener(documentSnapshot -> {
-            if (documentSnapshot.exists()) {
-                String name = documentSnapshot.getString("name");
-                String description = documentSnapshot.getString("description");
+    /*private void loadDetails(String lessonID){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Lessons")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        lessonsModels.clear();
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            String lessonName = document.getString("name");
+                            String description = document.getString("description");
+                            if (lessonName != null && description != null) {
+                                lessonsModels.add(new LessonsModel(lessonName, description, lessonID));
+                                lessonNameTextView.setText(lessonName);
+                                lessonDescriptionTextView.setText(description);
+                            }
+                        }
+                    }
+                });
+    }*/
 
-                lessonNameTextView.setText(name);
-                lessonDescriptionTextView.setText(description);
-            }
-        });
-    }
+
 }

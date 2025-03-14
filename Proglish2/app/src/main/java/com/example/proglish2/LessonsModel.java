@@ -8,6 +8,10 @@ public class LessonsModel implements Parcelable {
     private String lessonName;
     private String lessonDescription;
 
+    LessonsModel(){
+
+    }
+
     public LessonsModel(String lessonID, String lessonName, String lessonDescription) {
         this.lessonID = lessonID;
         this.lessonName = lessonName;

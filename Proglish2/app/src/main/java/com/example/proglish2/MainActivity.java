@@ -2,7 +2,6 @@ package com.example.proglish2;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -37,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
         auth = FirebaseAuth.getInstance();
         button = findViewById(R.id.button);
         user = auth.getCurrentUser();
-        RecyclerView recyclerView = findViewById(R.id.mRecyclerView);
         bottomNavigationView = findViewById(R.id.BottomNavigationView);
         if (user == null){
             Intent intent = new Intent(getApplicationContext(), login.class);
@@ -45,15 +43,11 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
             finish();
         }
         else{
-            //textView.setText(user.getEmail());
             if (user == null) {
                 redirectToLogin();
             } else {
                 if (user.isEmailVerified()) {
                     fetchLessonsFromFirestore();
-                    RecyclerViweAdapter adapter = new RecyclerViweAdapter(this, lessonsModels, this);
-                    recyclerView.setAdapter(adapter);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(this));
                     bottomNavigationView.setSelectedItemId(R.id.home);
 
                     bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -61,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
                         if (itemId == R.id.home) {
                             return true;
                         } else if (itemId == R.id.quiz) {
-                            startActivity(new Intent(getApplicationContext(), DashboardActivity.class)); //change to QuizActivity
+                            startActivity(new Intent(getApplicationContext(), QuizActivity.class));
                             overridePendingTransition(R.anim.slide_in_rigth, R.anim.slide_out_left);
                             finish();
                             return true;
@@ -113,9 +107,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
                             String lessonID = document.getString("lessonID");
 
                             if (lessonName != null && description != null) {
-                                lessonsModels.add(new LessonsModel(lessonName, description, lessonID));
-                            } else {
-                                Log.e("Firestore", "Missing data for document: " + document.getId());
+                                lessonsModels.add(new LessonsModel(lessonID, lessonName, description));
                             }
                         }
 
@@ -124,9 +116,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
                         recyclerView.setAdapter(adapter);
                         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-                    } else {
-                        Log.e("Firestore", "Error getting lessons", task.getException());
-                        Toast.makeText(this, "Error getting lessons.", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -138,9 +127,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
             Intent intent = new Intent(MainActivity.this, LessonsDescription.class);
             intent.putExtra("lessonID", lessonID);
             startActivity(intent);
-        } else {
-            Log.e("MainActivity", "Lesson ID is null for position: " + position);
         }
     }
-
 }

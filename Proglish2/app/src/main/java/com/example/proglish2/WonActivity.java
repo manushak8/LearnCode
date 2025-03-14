@@ -25,20 +25,11 @@ public class WonActivity extends AppCompatActivity {
 
         circularProgressBar = findViewById(R.id.circularProgressBar);
         resultText = findViewById(R.id.resultText);
-        exit = findViewById(R.id.exit_ic);
         correct = getIntent().getIntExtra("correct", 0);
         wrong = getIntent().getIntExtra("wrong", 0);
 
         circularProgressBar.setProgress(correct);
         resultText.setText(correct + "/10");
-
-        exit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(WonActivity.this, QuizActivity.class);
-                startActivity(intent);
-            }
-        });
 
     }
 }
