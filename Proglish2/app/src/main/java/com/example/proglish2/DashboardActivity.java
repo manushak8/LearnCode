@@ -90,40 +90,27 @@ public class DashboardActivity extends AppCompatActivity {
         backImageView = findViewById(R.id.back_ic);
     }
 
-    public void correct(CardView cardView){
-        cardView.setCardBackgroundColor(getResources().getColor(R.color.green));
-
-        nextBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                correctCount++;
-                index++;
-                quizModel = allQuestionsList.get(index);
-                resetColor();
-                setAllData();
-                enableBtn();
-            }
-        });
+    public void correct(CardView selectedCard) {
+        selectedCard.setCardBackgroundColor(getResources().getColor(R.color.green));
+        correctCount++;
+        nextBtn.setClickable(true);
     }
 
-    public void wrong(CardView cardView){
-        cardView.setCardBackgroundColor(getResources().getColor(R.color.red));
+    public void wrong(CardView selectedCard) {
+        selectedCard.setCardBackgroundColor(getResources().getColor(R.color.red));
+        wrongCount++;
 
-        nextBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                wrongCount++;
-                if(index < allQuestionsList.size() - 1){
-                    index++;
-                    quizModel = allQuestionsList.get(index);
-                    resetColor();
-                    setAllData();
-                    enableBtn();
-                }else {
-                    gameWon();
-                }
-            }
-        });
+        if (quizModel.getoA().equals(quizModel.getAnswer())) {
+            cardOA.setCardBackgroundColor(getResources().getColor(R.color.green));
+        } else if (quizModel.getoB().equals(quizModel.getAnswer())) {
+            cardOB.setCardBackgroundColor(getResources().getColor(R.color.green));
+        } else if (quizModel.getoC().equals(quizModel.getAnswer())) {
+            cardOC.setCardBackgroundColor(getResources().getColor(R.color.green));
+        } else if (quizModel.getoD().equals(quizModel.getAnswer())) {
+            cardOD.setCardBackgroundColor(getResources().getColor(R.color.green));
+        }
+
+        nextBtn.setClickable(true);
     }
 
     private void gameWon() {
@@ -155,70 +142,43 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     public void optionAClick(View view) {
-        disableBtn();
-        nextBtn.setClickable(true);
-
-        if(quizModel.getoA().equals(quizModel.getAnswer())){
-            cardOA.setCardBackgroundColor(getResources().getColor(R.color.green));
-
-            if(index < allQuestionsList.size() - 1){
-                correct(cardOA);
-            }else {
-                gameWon();
-            }
-        }else{
-            wrong(cardOA);
-        }
+        optionClick(cardOA, quizModel.getoA());
     }
-
     public void optionBClick(View view) {
-        disableBtn();
-        nextBtn.setClickable(true);
-
-        if(quizModel.getoB().equals(quizModel.getAnswer())){
-            cardOB.setCardBackgroundColor(getResources().getColor(R.color.green));
-
-            if(index < allQuestionsList.size() - 1){
-                correct(cardOB);
-            }else {
-                gameWon();
-            }
-        }else{
-            wrong(cardOB);
-        }
+        optionClick(cardOB, quizModel.getoB());
     }
-
     public void optionCClick(View view) {
-        disableBtn();
-        nextBtn.setClickable(true);
-
-        if(quizModel.getoC().equals(quizModel.getAnswer())){
-            cardOC.setCardBackgroundColor(getResources().getColor(R.color.green));
-
-            if(index < allQuestionsList.size() - 1){
-                correct(cardOC);
-            }else {
-                gameWon();
-            }
-        }else{
-            wrong(cardOC);
-        }
+        optionClick(cardOC, quizModel.getoC());
+    }
+    public void optionDClick(View view) {
+        optionClick(cardOD, quizModel.getoD());
     }
 
-    public void optionDClick(View view) {
+    public void optionClick(CardView selectedCard, String selectedAnswer) {
         disableBtn();
+        nextBtn.setEnabled(true);
         nextBtn.setClickable(true);
+        nextBtn.setAlpha(1f);
 
-        if(quizModel.getoD().equals(quizModel.getAnswer())){
-            cardOD.setCardBackgroundColor(getResources().getColor(R.color.green));
+        if (selectedAnswer.equals(quizModel.getAnswer())) {
+            correct(selectedCard);
+        } else {
+            wrong(selectedCard);
+        }
 
-            if(index < allQuestionsList.size() - 1){
-                correct(cardOD);
-            }else {
+        nextBtn.setOnClickListener(v -> {
+            if (index < allQuestionsList.size() - 1) {
+                index++;
+                quizModel = allQuestionsList.get(index);
+                resetColor();
+                setAllData();
+                enableBtn();
+                nextBtn.setEnabled(false);
+                nextBtn.setClickable(false);
+                nextBtn.setAlpha(0.5f);
+            } else {
                 gameWon();
             }
-        }else{
-            wrong(cardOD);
-        }
+        });
     }
 }

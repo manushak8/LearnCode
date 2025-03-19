@@ -32,7 +32,6 @@ public class QuizActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
 
-        // RecyclerView կարգավորում
         categoryRecyclerView = findViewById(R.id.categoryRecyclerView);
         categoryRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         categoryAdapter = new CategoryAdapter(this, categoryList);

@@ -24,12 +24,20 @@ public class WonActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         circularProgressBar = findViewById(R.id.circularProgressBar);
+        exit = findViewById(R.id.exit_ic);
         resultText = findViewById(R.id.resultText);
         correct = getIntent().getIntExtra("correct", 0);
         wrong = getIntent().getIntExtra("wrong", 0);
 
         circularProgressBar.setProgress(correct);
         resultText.setText(correct + "/10");
+
+        exit.setOnClickListener(v -> {
+            Intent intent = new Intent(WonActivity.this, QuizActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
 
     }
 }
