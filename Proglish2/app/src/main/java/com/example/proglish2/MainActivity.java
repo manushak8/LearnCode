@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             String lessonName = document.getString("name");
                             String description = document.getString("description");
-                            String lessonID = document.getString("lessonID");
+                            String lessonID = document.getString("id");
 
                             if (lessonName != null && description != null) {
                                 lessonsModels.add(new LessonsModel(lessonID, lessonName, description));
