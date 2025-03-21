@@ -5,16 +5,20 @@ import static com.example.proglish2.SplashScreenActivity.listOfQuestions;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.Collections;
 import java.util.List;
@@ -27,6 +31,8 @@ public class DashboardActivity extends AppCompatActivity {
     TextView card_question, optionA, optionB, optionC, optionD, exit;
     CardView cardOA, cardOB, cardOC, cardOD;
     ImageView backImageView;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     int correctCount = 0;
     int wrongCount = 0;
     LinearLayout nextBtn;
@@ -44,6 +50,8 @@ public class DashboardActivity extends AppCompatActivity {
         resetColor();
         nextBtn.setClickable(false);
         setAllData();
+
+        //fetchQuestionsFromFirebase();
 
         exit.setOnClickListener(v -> {
             Intent intent = new Intent(DashboardActivity.this, QuizActivity.class);
@@ -64,6 +72,43 @@ public class DashboardActivity extends AppCompatActivity {
         });
 
     }
+
+    /*private void fetchQuestionsFromFirebase() {
+        db = FirebaseFirestore.getInstance();
+        db.collection("questions")
+                .get()  // Այստեղ ավելի չի կիրառվում whereEqualTo, այսինքն, ստանում ենք բոլոր հարցերը
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        allQuestionsList.clear();
+                        int count = 0;
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Log.e("Firebase", "Fetched question: " + document.getString("question"));
+                            QuizModel question = new QuizModel(
+                                    document.getString("question"),
+                                    document.getString("oA"),
+                                    document.getString("oB"),
+                                    document.getString("oC"),
+                                    document.getString("oD"),
+                                    document.getString("answer")
+                            );
+                            allQuestionsList.add(question);
+                            count++;
+                        }
+                        Log.e("Firebase", "Total questions fetched: " + count);  // Ավելացնել այս տողը
+                        if (!allQuestionsList.isEmpty()) {
+                            Collections.shuffle(allQuestionsList);
+                            quizModel = allQuestionsList.get(0);
+                            setAllData();
+                        } else {
+                            Log.e("Firebase", "No questions found.");
+                            Toast.makeText(DashboardActivity.this, "Հարցեր չկան", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Log.e("Firebase", "Error getting questions: ", task.getException());
+                        Toast.makeText(DashboardActivity.this, "Չհաջողվեց ստանալ տվյալները", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }*/
 
     private void setAllData() {
         card_question.setText(quizModel.getQuestion());

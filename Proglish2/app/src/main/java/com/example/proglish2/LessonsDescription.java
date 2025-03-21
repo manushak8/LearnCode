@@ -1,10 +1,8 @@
 package com.example.proglish2;
 
 import android.os.Bundle;
-
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,11 +10,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LessonsDescription extends AppCompatActivity {
-    private TextView lessonNameTextView, lessonDescriptionTextView;
+    private TextView lessonNameTextView, wordTextView;
+    private LinearLayout next_button;
     private FirebaseFirestore db;
-
+    private List<String> wordsList = new ArrayList<>();
+    private int currentIndex = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,15 +25,16 @@ public class LessonsDescription extends AppCompatActivity {
         setContentView(R.layout.activity_lessons_description);
 
         db = FirebaseFirestore.getInstance();
+        next_button = findViewById(R.id.next_button);
         lessonNameTextView = findViewById(R.id.lessonName);
-        lessonDescriptionTextView = findViewById(R.id.lessonDescription);
+        wordTextView = findViewById(R.id.lessonDescription);
 
         loadDetails();
 
+        next_button.setOnClickListener(v -> showNextWord());
     }
 
-    private void loadDetails(){
-        db = FirebaseFirestore.getInstance();
+    private void loadDetails() {
         String lessonID = getIntent().getStringExtra("lessonID");
 
         db.collection("Lessons")
@@ -42,15 +44,28 @@ public class LessonsDescription extends AppCompatActivity {
                     if (task.isSuccessful() && !task.getResult().isEmpty()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             String lessonName = document.getString("name");
-                            String description = document.getString("description");
-
-                            if (lessonName != null && description != null) {
+                            if (lessonName != null) {
                                 lessonNameTextView.setText(lessonName);
-                                lessonDescriptionTextView.setText(description);
+                            }
+
+                            for (int i = 1; i <= 10; i++) {
+                                String description = document.getString("description" + i);
+                                if (description != null) {
+                                    wordsList.add(description);
+                                }
+                            }
+                            if (!wordsList.isEmpty()) {
+                                wordTextView.setText(wordsList.get(0));
                             }
                         }
                     }
                 });
     }
 
+    private void showNextWord() {
+        if (currentIndex < wordsList.size() - 1) {
+            currentIndex++;
+            wordTextView.setText(wordsList.get(currentIndex));
+        }
+    }
 }

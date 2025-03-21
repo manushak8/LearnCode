@@ -1,26 +1,53 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".LessonsDescription">
+    android:padding="16dp"
+    android:background="#2C43B8">
 
+    <!-- Դասի վերնագիր -->
     <TextView
         android:id="@+id/lessonName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Lesson Name"
-        android:textSize="@dimen/_18sdp" />
+        android:text="name"
+        android:textSize="@dimen/_18sdp"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:paddingBottom="8dp" />
+
 
     <TextView
         android:id="@+id/lessonDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Lesson Description"
-        android:textSize="@dimen/_16sdp" />
+        android:text="Description"
+        android:textSize="@dimen/_14sdp"
+        android:textColor="#dcdde1"
+        android:lineSpacingExtra="4dp"
+        android:paddingBottom="16dp" />
 
+    <!-- Հաջորդ դասին անցնելու կոճակ -->
+    <LinearLayout
+        android:id="@+id/next_button"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_marginTop="@dimen/_350sdp"
+        android:layout_marginStart="@dimen/_35sdp"
+        android:layout_marginRight="@dimen/_35sdp"
+        android:layout_marginEnd="@dimen/_35sdp"
+        android:gravity="center"
+        android:background="@drawable/next_btn_shape" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/next"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_20sdp"
+            android:layout_gravity="center"
+            android:textAllCaps="true"/>
+    </LinearLayout>
 
 
 </LinearLayout>
