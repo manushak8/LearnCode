@@ -14,18 +14,6 @@
         android:layout_height="@dimen/_40sdp"
         android:background="#3CB2D7">
 
-        <ImageView
-            android:id="@+id/back_ic"
-            android:layout_width="@dimen/_25sdp"
-            android:layout_height="@dimen/_25sdp"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:background="@drawable/back_ic"
-            android:backgroundTint="@color/white"
-            android:layout_centerVertical="true"
-            app:tint="@color/white"
-            android:clickable="true"
-            android:focusable="true"/>
-
         <TextView
             android:id="@+id/exit_ic"
             android:layout_width="wrap_content"
@@ -54,10 +42,11 @@
             android:id="@+id/card_question"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
             android:layout_gravity="center"
+            android:textSize="@dimen/_15sdp"
             android:gravity="center"
-            android:text="question">
+            android:text="question"
+            android:textColor="@color/black">
 
         </TextView>
 
@@ -80,6 +69,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:layout_gravity="center"
+            android:textSize="@dimen/_15sdp"
             android:text="A">
 
         </TextView>
@@ -102,6 +92,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
+            android:textSize="@dimen/_15sdp"
             android:layout_gravity="center"
             android:text="B">
 
@@ -126,6 +117,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:layout_gravity="center"
+            android:textSize="@dimen/_15sdp"
             android:text="C">
 
         </TextView>
@@ -149,6 +141,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:layout_gravity="center"
+            android:textSize="@dimen/_15sdp"
             android:text="D">
 
         </TextView>
@@ -159,7 +152,7 @@
         android:id="@+id/next_btn"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
-        android:layout_marginTop="@dimen/_50sdp"
+        android:layout_marginTop="@dimen/_40sdp"
         android:layout_marginStart="@dimen/_35sdp"
         android:layout_marginRight="@dimen/_35sdp"
         android:layout_marginEnd="@dimen/_35sdp"

@@ -12,6 +12,6 @@
     </style>
 
     <style name="ProgressBar">
-        <item name="colorSecondary">@color/white</item>
+        <item name="colorSecondary">#3B82F6</item>
     </style>
 </resources>

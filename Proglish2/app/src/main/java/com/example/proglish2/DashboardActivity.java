@@ -30,8 +30,7 @@ public class DashboardActivity extends AppCompatActivity {
     int index = 0;
     TextView card_question, optionA, optionB, optionC, optionD, exit;
     CardView cardOA, cardOB, cardOC, cardOD;
-    ImageView backImageView;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    //FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     int correctCount = 0;
     int wrongCount = 0;
@@ -59,24 +58,12 @@ public class DashboardActivity extends AppCompatActivity {
             finish();
         });
 
-        backImageView.setOnClickListener(v -> {
-            if (index > 0) {
-                index--;
-                quizModel = allQuestionsList.get(index);
-                resetColor();
-                setAllData();
-                enableBtn();
-            } else {
-                finish();
-            }
-        });
-
     }
 
     /*private void fetchQuestionsFromFirebase() {
         db = FirebaseFirestore.getInstance();
         db.collection("questions")
-                .get()  // Այստեղ ավելի չի կիրառվում whereEqualTo, այսինքն, ստանում ենք բոլոր հարցերը
+                .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         allQuestionsList.clear();
@@ -94,18 +81,18 @@ public class DashboardActivity extends AppCompatActivity {
                             allQuestionsList.add(question);
                             count++;
                         }
-                        Log.e("Firebase", "Total questions fetched: " + count);  // Ավելացնել այս տողը
+                        Log.e("Firebase", "Total questions fetched: " + count);
                         if (!allQuestionsList.isEmpty()) {
                             Collections.shuffle(allQuestionsList);
                             quizModel = allQuestionsList.get(0);
                             setAllData();
                         } else {
                             Log.e("Firebase", "No questions found.");
-                            Toast.makeText(DashboardActivity.this, "Հարցեր չկան", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(DashboardActivity.this, "no questions", Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         Log.e("Firebase", "Error getting questions: ", task.getException());
-                        Toast.makeText(DashboardActivity.this, "Չհաջողվեց ստանալ տվյալները", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DashboardActivity.this, "not received data", Toast.LENGTH_SHORT).show();
                     }
                 });
     }*/
@@ -132,7 +119,6 @@ public class DashboardActivity extends AppCompatActivity {
 
         nextBtn = findViewById(R.id.next_btn);
         exit = findViewById(R.id.exit_ic);
-        backImageView = findViewById(R.id.back_ic);
     }
 
     public void correct(CardView selectedCard) {

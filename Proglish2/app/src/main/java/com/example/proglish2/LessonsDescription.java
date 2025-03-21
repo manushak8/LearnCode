@@ -1,5 +1,6 @@
 package com.example.proglish2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -51,7 +52,9 @@ public class LessonsDescription extends AppCompatActivity {
                             for (int i = 1; i <= 10; i++) {
                                 String description = document.getString("description" + i);
                                 if (description != null) {
-                                    wordsList.add(description);
+                                    String formattedText = description.replaceAll("([.!?]) ", "$1\n");
+
+                                    wordsList.add(formattedText);
                                 }
                             }
                             if (!wordsList.isEmpty()) {
@@ -66,6 +69,10 @@ public class LessonsDescription extends AppCompatActivity {
         if (currentIndex < wordsList.size() - 1) {
             currentIndex++;
             wordTextView.setText(wordsList.get(currentIndex));
+        } else {
+            Intent intent = new Intent(LessonsDescription.this, QuizActivity.class);
+            startActivity(intent);
+            finish();
         }
     }
 }

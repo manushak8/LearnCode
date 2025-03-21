@@ -11,11 +11,9 @@
     <string name="welcome">"Welcome, "</string>
     <string name="lesson">"Lesson 1"</string>
     <string name="confirm_password">"Confirm password"</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="exit">Exit</string>
     <string name="next">Next</string>
-    <string name="motivation">Keep going! You can do it!</string>
+    <string name="motivation">Продолжайте! Вы сможете!</string>
     <!--
     <string-array name="lessons">
         <item>Lesson 1</item>

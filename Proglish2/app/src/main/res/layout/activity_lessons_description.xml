@@ -16,11 +16,12 @@
         android:textStyle="bold"
         android:paddingBottom="8dp" />
 
-
+    <!-- Բովանդակությունը -->
     <TextView
         android:id="@+id/lessonDescription"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:text="Description"
         android:textSize="@dimen/_14sdp"
         android:textColor="#dcdde1"
@@ -32,12 +33,11 @@
         android:id="@+id/next_button"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
-        android:layout_marginTop="@dimen/_350sdp"
         android:layout_marginStart="@dimen/_35sdp"
-        android:layout_marginRight="@dimen/_35sdp"
         android:layout_marginEnd="@dimen/_35sdp"
         android:gravity="center"
-        android:background="@drawable/next_btn_shape" >
+        android:background="@drawable/next_btn_shape"
+        android:layout_marginBottom="@dimen/_50sdp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -48,6 +48,5 @@
             android:layout_gravity="center"
             android:textAllCaps="true"/>
     </LinearLayout>
-
 
 </LinearLayout>
