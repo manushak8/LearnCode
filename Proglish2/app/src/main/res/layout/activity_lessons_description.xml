@@ -2,14 +2,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
     android:background="#2C43B8">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:background="#3CB2D7">
+
+        <TextView
+            android:id="@+id/exit_ic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/exit"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_18sdp"
+            android:clickable="true"
+            android:focusable="true"/>
+
+    </RelativeLayout>
 
     <!-- Դասի վերնագիր -->
     <TextView
         android:id="@+id/lessonName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="@dimen/_8sdp"
         android:text="name"
         android:textSize="@dimen/_18sdp"
         android:textColor="#ffffff"
@@ -21,6 +41,7 @@
         android:id="@+id/lessonDescription"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:padding="@dimen/_8sdp"
         android:layout_weight="1"
         android:text="Description"
         android:textSize="@dimen/_14sdp"

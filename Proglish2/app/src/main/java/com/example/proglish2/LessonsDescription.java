@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LessonsDescription extends AppCompatActivity {
-    private TextView lessonNameTextView, wordTextView;
+    private TextView lessonNameTextView, wordTextView, exit;
     private LinearLayout next_button;
     private FirebaseFirestore db;
     private List<String> wordsList = new ArrayList<>();
@@ -23,14 +23,22 @@ public class LessonsDescription extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_lessons_description);
 
         db = FirebaseFirestore.getInstance();
         next_button = findViewById(R.id.next_button);
         lessonNameTextView = findViewById(R.id.lessonName);
         wordTextView = findViewById(R.id.lessonDescription);
+        exit = findViewById(R.id.exit_ic);
 
         loadDetails();
+
+        exit.setOnClickListener(v -> {
+            Intent intent = new Intent(LessonsDescription.this, LessonQuizSelectionActivity.class);
+            startActivity(intent);
+            finish();
+        });
 
         next_button.setOnClickListener(v -> showNextWord());
     }
@@ -70,7 +78,7 @@ public class LessonsDescription extends AppCompatActivity {
             currentIndex++;
             wordTextView.setText(wordsList.get(currentIndex));
         } else {
-            Intent intent = new Intent(LessonsDescription.this, QuizActivity.class);
+            Intent intent = new Intent(LessonsDescription.this, LessonQuizSelectionActivity.class);
             startActivity(intent);
             finish();
         }

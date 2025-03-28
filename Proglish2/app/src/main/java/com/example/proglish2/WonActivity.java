@@ -33,7 +33,7 @@ public class WonActivity extends AppCompatActivity {
         resultText.setText(correct + "/10");
 
         exit.setOnClickListener(v -> {
-            Intent intent = new Intent(WonActivity.this, QuizActivity.class);
+            Intent intent = new Intent(WonActivity.this, LessonQuizSelectionActivity.class);
             startActivity(intent);
             finish();
         });

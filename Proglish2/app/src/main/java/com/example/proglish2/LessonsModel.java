@@ -6,34 +6,23 @@ import android.os.Parcelable;
 public class LessonsModel implements Parcelable {
     private String lessonID;
     private String lessonName;
-    private String lessonDescription;
 
-    LessonsModel(){
 
-    }
-
-    public LessonsModel(String lessonID, String lessonName, String lessonDescription) {
+    public LessonsModel(String lessonID, String lessonName) {
         this.lessonID = lessonID;
         this.lessonName = lessonName;
-        this.lessonDescription = lessonDescription;
+
     }
 
     protected LessonsModel(Parcel in) {
         lessonID = in.readString();
         lessonName = in.readString();
-        lessonDescription = in.readString();
     }
 
-    public String getLessonID() {
-        return lessonID;
-    }
     public String getLessonName() {
         return lessonName;
     }
 
-    public String getLessonDescription() {
-        return lessonDescription;
-    }
 
     public static final Creator<LessonsModel> CREATOR = new Creator<LessonsModel>() {
         @Override
@@ -51,7 +40,7 @@ public class LessonsModel implements Parcelable {
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeString(lessonID);
         parcel.writeString(lessonName);
-        parcel.writeString(lessonDescription);
+
 
     }
 

@@ -53,7 +53,7 @@ public class DashboardActivity extends AppCompatActivity {
         //fetchQuestionsFromFirebase();
 
         exit.setOnClickListener(v -> {
-            Intent intent = new Intent(DashboardActivity.this, QuizActivity.class);
+            Intent intent = new Intent(DashboardActivity.this, LessonQuizSelectionActivity.class);
             startActivity(intent);
             finish();
         });

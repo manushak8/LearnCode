@@ -3,11 +3,8 @@ package com.example.proglish2;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,6 +22,7 @@ public class LessonQuizSelectionActivity extends AppCompatActivity implements Re
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lesson_quiz_selection);
 
@@ -39,12 +37,23 @@ public class LessonQuizSelectionActivity extends AppCompatActivity implements Re
     }
 
     private void fetchLessonQuizData() {
+        int startIndex = getIntent().getIntExtra("startIndex", 0);
+
         db.collection("Lessons")
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         lessonQuizList.clear();
+                        ArrayList<QueryDocumentSnapshot> allDocuments = new ArrayList<>();
+
                         for (QueryDocumentSnapshot document : task.getResult()) {
+                            allDocuments.add(document);
+                        }
+
+                        int endIndex = Math.min(startIndex + 3, allDocuments.size());
+
+                        for (int i = startIndex; i < endIndex; i++) {
+                            QueryDocumentSnapshot document = allDocuments.get(i);
                             String lessonID = document.getString("id");
                             String lessonName = document.getString("name");
 
@@ -57,6 +66,7 @@ public class LessonQuizSelectionActivity extends AppCompatActivity implements Re
                     }
                 });
     }
+
 
     @Override
     public void onItemClick(int position) {

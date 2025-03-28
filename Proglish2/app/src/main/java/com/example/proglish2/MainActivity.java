@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
                         if (itemId == R.id.home) {
                             return true;
                         } else if (itemId == R.id.quiz) {
-                            startActivity(new Intent(getApplicationContext(), LessonQuizSelectionActivity.class));
+                            startActivity(new Intent(getApplicationContext(), Dictionary.class));
                             overridePendingTransition(R.anim.slide_in_rigth, R.anim.slide_out_left);
                             finish();
                             return true;
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
 
     private void fetchLessonsFromFirestore() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Lessons")
+        db.collection("Modules")
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -103,11 +103,10 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
 
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             String lessonName = document.getString("name");
-                            String description = document.getString("description1");
                             String lessonID = document.getString("id");
 
-                            if (lessonName != null && description != null) {
-                                lessonsModels.add(new LessonsModel(lessonID, lessonName, description));
+                            if (lessonName != null) {
+                                lessonsModels.add(new LessonsModel(lessonID, lessonName));
                             }
                         }
 
@@ -122,11 +121,10 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
 
     @Override
     public void onItemClick(int position) {
-        String lessonID = lessonsModels.get(position).getLessonID();
-        if (lessonID != null) {
-            Intent intent = new Intent(MainActivity.this, LessonsDescription.class);
-            intent.putExtra("lessonID", lessonID);
-            startActivity(intent);
-        }
+        int startIndex = position * 3;
+        Intent intent = new Intent(MainActivity.this, LessonQuizSelectionActivity.class);
+        intent.putExtra("startIndex", startIndex);
+        startActivity(intent);
     }
+
 }
