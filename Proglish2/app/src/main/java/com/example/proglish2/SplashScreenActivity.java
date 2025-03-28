@@ -40,7 +40,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         ));
 
         listOfQuestions.add(new QuizModel(
-                "Коллекция разных типов данных",
+                "Что такое 'Массив'?",
                 "A) Метод работает только с числами",
                 "B) Коллекция элементов одного типа",
                 "C) Коллекция элементов одного типа",

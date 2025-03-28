@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
                         if (itemId == R.id.home) {
                             return true;
                         } else if (itemId == R.id.quiz) {
-                            startActivity(new Intent(getApplicationContext(), QuizActivity.class));
+                            startActivity(new Intent(getApplicationContext(), LessonQuizSelectionActivity.class));
                             overridePendingTransition(R.anim.slide_in_rigth, R.anim.slide_out_left);
                             finish();
                             return true;

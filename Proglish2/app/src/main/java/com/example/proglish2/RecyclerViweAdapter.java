@@ -36,7 +36,7 @@ public class RecyclerViweAdapter extends RecyclerView.Adapter<RecyclerViweAdapte
         LessonsModel currentLesson = lessonsModels.get(position);
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, LessonsDescription.class);
+            Intent intent = new Intent(context, LessonQuizSelectionActivity.class);
             intent.putExtra("lessonID", currentLesson.getLessonID());
             context.startActivity(intent);
         });
