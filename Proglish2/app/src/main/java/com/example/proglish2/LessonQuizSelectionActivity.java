@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -15,10 +16,13 @@ import java.util.ArrayList;
 
 public class LessonQuizSelectionActivity extends AppCompatActivity implements RecyclerViewInterface {
 
-    ArrayList<LessonQuizModel> lessonQuizList = new ArrayList<>();
+    ArrayList<LessonQuizItem> lessonQuizList = new ArrayList<>();
+
     RecyclerView recyclerView;
     LessonQuizAdapter adapter;
     FirebaseFirestore db;
+    BottomNavigationView bottomNavigationView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +33,35 @@ public class LessonQuizSelectionActivity extends AppCompatActivity implements Re
         db = FirebaseFirestore.getInstance();
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        bottomNavigationView = findViewById(R.id.BottomNavigationView);
 
         adapter = new LessonQuizAdapter(this, lessonQuizList, this);
         recyclerView.setAdapter(adapter);
 
         fetchLessonQuizData();
+
+        bottomNavigationView.setSelectedItemId(R.id.home);
+
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.home) {
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                overridePendingTransition(R.anim.slide_in_rigth, R.anim.slide_out_left);
+                finish();
+                return true;
+            } else if (itemId == R.id.quiz) {
+                startActivity(new Intent(getApplicationContext(), Dictionary.class));
+                overridePendingTransition(R.anim.slide_in_rigth, R.anim.slide_out_left);
+                finish();
+                return true;
+            } else if (itemId == R.id.settings) {
+                startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+                overridePendingTransition(R.anim.slide_in_rigth, R.anim.slide_out_left);
+                finish();
+                return true;
+            }
+            return false;
+        });
     }
 
     private void fetchLessonQuizData() {
@@ -52,17 +80,20 @@ public class LessonQuizSelectionActivity extends AppCompatActivity implements Re
 
                         int endIndex = Math.min(startIndex + 3, allDocuments.size());
 
+                        int topicIndex = 1;
+
                         for (int i = startIndex; i < endIndex; i++) {
                             QueryDocumentSnapshot document = allDocuments.get(i);
                             String lessonID = document.getString("id");
                             String lessonName = document.getString("name");
 
                             if (lessonID != null && lessonName != null) {
-                                lessonQuizList.add(new LessonQuizModel(lessonID, lessonName, "lesson"));
-                                lessonQuizList.add(new LessonQuizModel(lessonID, "Quiz: " + lessonName, "quiz"));
+                                lessonQuizList.add(new LessonQuizHeader("Topic " + topicIndex));
+                                lessonQuizList.add(new LessonQuizContent(lessonID, lessonName, "lesson"));
+                                lessonQuizList.add(new LessonQuizContent(lessonID, "Quiz: " + lessonName, "quiz"));
+                                topicIndex++;
                             }
                         }
-                        adapter.notifyDataSetChanged();
                     }
                 });
     }
@@ -70,16 +101,20 @@ public class LessonQuizSelectionActivity extends AppCompatActivity implements Re
 
     @Override
     public void onItemClick(int position) {
-        LessonQuizModel item = lessonQuizList.get(position);
-        Intent intent;
+        LessonQuizItem item = lessonQuizList.get(position);
+        if (item.getItemType() == LessonQuizItem.TYPE_CONTENT) {
+            LessonQuizContent content = (LessonQuizContent) item;
+            Intent intent;
 
-        if (item.getType().equals("lesson")) {
-            intent = new Intent(this, LessonsDescription.class);
-            intent.putExtra("lessonID", item.getId());
-        } else {
-            intent = new Intent(this, DashboardActivity.class);
+            if (content.getType().equals("lesson")) {
+                intent = new Intent(this, LessonsDescription.class);
+                intent.putExtra("lessonID", content.getId());
+            } else {
+                intent = new Intent(this, DashboardActivity.class);
+            }
+
+            startActivity(intent);
         }
-
-        startActivity(intent);
     }
+
 }

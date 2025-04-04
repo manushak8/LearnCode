@@ -11,40 +11,65 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class LessonQuizAdapter extends RecyclerView.Adapter<LessonQuizAdapter.ViewHolder> {
+public class LessonQuizAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
-    private ArrayList<LessonQuizModel> lessonQuizList;
+    private ArrayList<LessonQuizItem> items;
     private RecyclerViewInterface recyclerViewInterface;
 
-    public LessonQuizAdapter(Context context, ArrayList<LessonQuizModel> lessonQuizList, RecyclerViewInterface recyclerViewInterface) {
+    public LessonQuizAdapter(Context context, ArrayList<LessonQuizItem> items, RecyclerViewInterface recyclerViewInterface) {
         this.context = context;
-        this.lessonQuizList = lessonQuizList;
+        this.items = items;
         this.recyclerViewInterface = recyclerViewInterface;
     }
 
-    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.lesson_quiz_item, parent, false);
-        return new ViewHolder(view, recyclerViewInterface);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        LessonQuizModel item = lessonQuizList.get(position);
-        holder.name.setText(item.getName());
+    public int getItemViewType(int position) {
+        return items.get(position).getItemType();
     }
 
     @Override
     public int getItemCount() {
-        return lessonQuizList.size();
+        return items.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if (viewType == LessonQuizItem.TYPE_HEADER) {
+            View view = LayoutInflater.from(context).inflate(R.layout.item_topic_header, parent, false);
+            return new HeaderViewHolder(view);
+        } else {
+            View view = LayoutInflater.from(context).inflate(R.layout.lesson_quiz_item, parent, false);
+            return new ContentViewHolder(view, recyclerViewInterface);
+        }
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        LessonQuizItem item = items.get(position);
+
+        if (holder instanceof HeaderViewHolder) {
+            ((HeaderViewHolder) holder).headerTitle.setText(((LessonQuizHeader) item).getTitle());
+        } else if (holder instanceof ContentViewHolder) {
+            ((ContentViewHolder) holder).name.setText(((LessonQuizContent) item).getName());
+        }
+    }
+
+    // ViewHolders
+
+    public static class HeaderViewHolder extends RecyclerView.ViewHolder {
+        TextView headerTitle;
+
+        public HeaderViewHolder(@NonNull View itemView) {
+            super(itemView);
+            headerTitle = itemView.findViewById(R.id.headerTitle);
+        }
+    }
+
+    public static class ContentViewHolder extends RecyclerView.ViewHolder {
         TextView name;
 
-        public ViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
+        public ContentViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
             super(itemView);
             name = itemView.findViewById(R.id.lessonQuizName);
 

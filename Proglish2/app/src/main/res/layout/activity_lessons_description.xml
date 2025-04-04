@@ -1,6 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="#2C43B8">
 
@@ -8,6 +9,18 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_40sdp"
         android:background="#3CB2D7">
+
+        <ImageView
+            android:id="@+id/back_ic"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:background="@drawable/back_ic"
+            android:backgroundTint="@color/white"
+            android:layout_centerVertical="true"
+            app:tint="@color/white"
+            android:clickable="true"
+            android:focusable="true"/>
 
         <TextView
             android:id="@+id/exit_ic"
@@ -61,6 +74,7 @@
         android:layout_marginBottom="@dimen/_50sdp">
 
         <TextView
+            android:id="@+id/next_button_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/next"
