@@ -7,13 +7,26 @@
     android:layout_height="match_parent"
     tools:context=".Dictionary">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/searchEditText"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Dictionary"
-        android:textSize="@dimen/_36sdp"
-        android:layout_centerInParent="true">
-    </TextView>
+        android:hint="@string/search"
+        android:padding="12dp"
+        android:background="@android:drawable/edit_text"
+        android:layout_margin="8dp"
+        android:inputType="text"
+        android:drawableStart="@android:drawable/ic_menu_search"/>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/RecyclerView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/searchEditText"
+        android:layout_above="@id/BottomNavigationView" >
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
