@@ -1,51 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/DrawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Dictionary">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
+    <!-- Main content -->
+    <RelativeLayout
+        android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp"
-        android:layout_alignParentTop="true">
+        android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/searchEditText"
-            android:layout_width="0dp"
+        <!-- Toolbar -->
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar" />
+
+        <!-- Search bar -->
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="@string/search"
-            android:padding="12dp"
-            android:background="@android:drawable/edit_text"
-            android:inputType="text"
-            android:drawableStart="@android:drawable/ic_menu_search" />
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:layout_below="@id/toolbar">
 
-    </LinearLayout>
+            <EditText
+                android:id="@+id/searchEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/search"
+                android:padding="12dp"
+                android:background="@android:drawable/edit_text"
+                android:inputType="text"
+                android:drawableStart="@android:drawable/ic_menu_search" />
+        </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/RecyclerView1"
-        android:layout_width="match_parent"
+        <!-- RecyclerView -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/RecyclerView1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/linearLayout"
+            android:layout_above="@id/BottomNavigationView" />
+
+        <!-- BottomNavigationView -->
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/BottomNavigationView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            app:itemIconSize="@dimen/_30sdp"
+            app:menu="@menu/botton_nav_menu" />
+    </RelativeLayout>
+
+    <!-- Drawer content -->
+    <RelativeLayout
+        android:layout_width="@dimen/_300sdp"
         android:layout_height="match_parent"
-        android:layout_below="@id/linearLayout"
-        android:layout_above="@id/BottomNavigationView" >
+        android:layout_gravity="start"
+        android:background="@color/white">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <include layout="@layout/nav_drawer" />
+    </RelativeLayout>
 
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/BottomNavigationView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:itemIconSize="@dimen/_30sdp"
-        app:menu="@menu/botton_nav_menu">
-
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
-
-</RelativeLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

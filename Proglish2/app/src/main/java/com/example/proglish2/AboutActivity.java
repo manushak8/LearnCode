@@ -21,7 +21,7 @@ public class AboutActivity extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout about, logout;
+    LinearLayout dictionary, about, logout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +33,7 @@ public class AboutActivity extends AppCompatActivity {
         menu = findViewById(R.id.menu);
         about = findViewById(R.id.info);
         logout = findViewById(R.id.logOut);
+        dictionary = findViewById(R.id.dictionary);
 
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +46,14 @@ public class AboutActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 recreate();
+            }
+        });
+
+        dictionary.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AboutActivity.this, Dictionary.class);
+                startActivity(intent);
             }
         });
 

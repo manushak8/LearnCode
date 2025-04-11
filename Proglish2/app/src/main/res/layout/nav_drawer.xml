@@ -38,7 +38,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/logOut"
+        android:id="@+id/dictionary"
         android:layout_marginStart="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_10sdp"
         android:orientation="horizontal">
@@ -47,9 +47,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:text="@string/logout"
+            android:text="@string/Dictionary"
             android:textSize="@dimen/_15sdp"
-            android:drawableLeft="@drawable/baseline_logout_24"
+            android:drawableLeft="@drawable/baseline_lightbulb_24"
             android:padding="@dimen/_8sdp"/>
 
     </LinearLayout>
@@ -69,6 +69,31 @@
             android:text="@string/info"
             android:textSize="@dimen/_15sdp"
             android:drawableLeft="@drawable/baseline_info_24"
+            android:padding="@dimen/_8sdp"/>
+
+    </LinearLayout>
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:background="@color/background"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/logOut"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="@string/logout"
+            android:textSize="@dimen/_15sdp"
+            android:drawableLeft="@drawable/baseline_logout_24"
             android:padding="@dimen/_8sdp"/>
 
     </LinearLayout>

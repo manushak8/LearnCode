@@ -1,25 +1,25 @@
 <resources>
     <string name="app_name">IT English</string>
-    <string name="login">Login</string>
-    <string name="email">Enter your email</string>
-    <string name="password">Enter your password</string>
-    <string name="signUp">Signup</string>
-    <string name="click_to_login">Already have an account? Login</string>
-    <string name="click_to_register">Don\'t have an account?  Signup </string>
-    <string name="logout">Logout</string>
-    <string name="welcome_back">Welcome back!</string>
-    <string name="welcome">"Welcome, "</string>
+    <string name="login">Войти</string>
+    <string name="email">Введите адрес электронной почты</string>
+    <string name="password">Введите свой пароль</string>
+    <string name="signUp">Зарегистрироваться</string>
+    <string name="click_to_login">У вас уже есть аккаунт? Войти</string>
+    <string name="click_to_register">Нет аккаунта? Зарегистрироваться </string>
+    <string name="logout">Выйти</string>
+    <string name="welcome_back">Добро пожаловать!</string>
+    <string name="welcome">"Добро пожаловать,"</string>
     <string name="lesson">"Lesson 1"</string>
-    <string name="confirm_password">"Confirm password"</string>
+    <string name="confirm_password">"Подтвердите пароль"</string>
     <string name="exit">Выход</string>
     <string name="next">Продолжить</string>
     <string name="motivation">Продолжайте! Вы сможете!</string>
-    <string name="settings">Settings</string>
+    <string name="settings">Настройки</string>
     <string name="home">Home</string>
-    <string name="dictionary">Dictionary</string>
-    <string name="search">Search...</string>
-    <string name="user_image">User Profile Image</string>
-    <string name="info">About</string>
+    <string name="dictionary">Словарь</string>
+    <string name="search">Поиск...</string>
+    <string name="info">О приложении</string>
+    <string name="Dictionary">Словарь</string>
 
     <!--
     <string-array name="lessons">

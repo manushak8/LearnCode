@@ -4,16 +4,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -22,6 +28,9 @@ import java.util.List;
 
 public class Dictionary extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
+    DrawerLayout drawerLayout;
+    ImageView menu;
+    LinearLayout dictionary, about, logout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +40,49 @@ public class Dictionary extends AppCompatActivity {
 
         bottomNavigationView = findViewById(R.id.BottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.quiz);
+        drawerLayout = findViewById(R.id.DrawerLayout);
+        menu = findViewById(R.id.menu);
+        about = findViewById(R.id.info);
+        logout = findViewById(R.id.logOut);
+        dictionary = findViewById(R.id.dictionary);
         RecyclerView recyclerView = findViewById(R.id.RecyclerView1);
         EditText searchEditText = findViewById(R.id.searchEditText);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         List<Word> wordList = new ArrayList<>();
         WordAdapter adapter = new WordAdapter(wordList);
+
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openDrawer(drawerLayout);
+            }
+        });
+
+        about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Dictionary.this, AboutActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        dictionary.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recreate();
+            }
+        });
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getApplicationContext(), login.class);
+                startActivity(intent);
+                finish();
+                redirectToLogin();
+            }
+        });
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
@@ -65,7 +112,8 @@ public class Dictionary extends AppCompatActivity {
                     for (DocumentSnapshot doc : queryDocumentSnapshots) {
                         String word = doc.getId();
                         String translation = doc.getString("translation");
-                        String example = doc.getString("example");
+                        //String example = doc.getString("example");
+                        String example = doc.getString("example") != null ? doc.getString("example") : "";
 
                         wordList.add(new Word(word, translation, example));
                     }
@@ -88,6 +136,27 @@ public class Dictionary extends AppCompatActivity {
 
     }
 
+    private void redirectToLogin() {
+        Intent intent = new Intent(getApplicationContext(), login.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public static void openDrawer(DrawerLayout drawerLayout){
+        drawerLayout.openDrawer(GravityCompat.START);
+    }
+
+    public static void closeDrawer(DrawerLayout drawerLayout){
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.openDrawer(GravityCompat.START);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        closeDrawer(drawerLayout);
+    }
     private void filterList(String query, List<Word> originalList, WordAdapter adapter) {
         List<Word> filteredList = new ArrayList<>();
         for (Word word : originalList) {

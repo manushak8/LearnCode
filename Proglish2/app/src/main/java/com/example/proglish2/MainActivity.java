@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
     BottomNavigationView bottomNavigationView;
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout about, logout;
+    LinearLayout dictionary, about, logout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
         menu = findViewById(R.id.menu);
         about = findViewById(R.id.info);
         logout = findViewById(R.id.logOut);
+        dictionary = findViewById(R.id.dictionary);
         bottomNavigationView = findViewById(R.id.BottomNavigationView);
 
         if (user == null){
@@ -97,6 +98,14 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(MainActivity.this, AboutActivity.class);
+                    startActivity(intent);
+                }
+            });
+
+            dictionary.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(MainActivity.this, Dictionary.class);
                     startActivity(intent);
                 }
             });
@@ -162,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
             drawerLayout.openDrawer(GravityCompat.START);
         }
     }
-    
+
     @Override
     protected void onPause() {
         super.onPause();
