@@ -1,13 +1,18 @@
 package com.example.proglish2;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,8 +29,10 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
     ArrayList<LessonsModel> lessonsModels = new ArrayList<>();
     FirebaseAuth auth;
     FirebaseUser user;
-    Button button;
     BottomNavigationView bottomNavigationView;
+    DrawerLayout drawerLayout;
+    ImageView menu;
+    LinearLayout about, logout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,9 +41,13 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
         setContentView(R.layout.activity_main);
 
         auth = FirebaseAuth.getInstance();
-        button = findViewById(R.id.button);
         user = auth.getCurrentUser();
+        drawerLayout = findViewById(R.id.drawer_layout);
+        menu = findViewById(R.id.menu);
+        about = findViewById(R.id.info);
+        logout = findViewById(R.id.logOut);
         bottomNavigationView = findViewById(R.id.BottomNavigationView);
+
         if (user == null){
             Intent intent = new Intent(getApplicationContext(), login.class);
             startActivity(intent);
@@ -75,7 +86,22 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
                 }
             }
 
-            button.setOnClickListener(new View.OnClickListener() {
+            menu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    openDrawer(drawerLayout);
+                }
+            });
+
+            about.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(MainActivity.this, AboutActivity.class);
+                    startActivity(intent);
+                }
+            });
+
+            logout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     FirebaseAuth.getInstance().signOut();
@@ -127,4 +153,19 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
         startActivity(intent);
     }
 
+    public static void openDrawer(DrawerLayout drawerLayout){
+        drawerLayout.openDrawer(GravityCompat.START);
+    }
+
+    public static void closeDrawer(DrawerLayout drawerLayout){
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.openDrawer(GravityCompat.START);
+        }
+    }
+    
+    @Override
+    protected void onPause() {
+        super.onPause();
+        closeDrawer(drawerLayout);
+    }
 }

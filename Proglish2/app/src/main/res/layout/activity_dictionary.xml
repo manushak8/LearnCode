@@ -7,23 +7,32 @@
     android:layout_height="match_parent"
     tools:context=".Dictionary">
 
-    <EditText
-        android:id="@+id/searchEditText"
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/search"
-        android:padding="12dp"
-        android:background="@android:drawable/edit_text"
-        android:layout_margin="8dp"
-        android:inputType="text"
-        android:drawableStart="@android:drawable/ic_menu_search"/>
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:layout_alignParentTop="true">
 
+        <EditText
+            android:id="@+id/searchEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/search"
+            android:padding="12dp"
+            android:background="@android:drawable/edit_text"
+            android:inputType="text"
+            android:drawableStart="@android:drawable/ic_menu_search" />
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/RecyclerView1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/searchEditText"
+        android:layout_below="@id/linearLayout"
         android:layout_above="@id/BottomNavigationView" >
 
     </androidx.recyclerview.widget.RecyclerView>

@@ -18,6 +18,9 @@
     <string name="home">Home</string>
     <string name="dictionary">Dictionary</string>
     <string name="search">Search...</string>
+    <string name="user_image">User Profile Image</string>
+    <string name="info">About</string>
+
     <!--
     <string-array name="lessons">
         <item>Lesson 1</item>

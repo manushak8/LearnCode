@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -30,6 +31,12 @@ public class Dictionary extends AppCompatActivity {
 
         bottomNavigationView = findViewById(R.id.BottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.quiz);
+        RecyclerView recyclerView = findViewById(R.id.RecyclerView1);
+        EditText searchEditText = findViewById(R.id.searchEditText);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        List<Word> wordList = new ArrayList<>();
+        WordAdapter adapter = new WordAdapter(wordList);
+
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             if (itemId == R.id.home) {
@@ -48,11 +55,7 @@ public class Dictionary extends AppCompatActivity {
             return false;
         });
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        List<Word> wordList = new ArrayList<>();
-        WordAdapter adapter = new WordAdapter(wordList);
 
-        RecyclerView recyclerView = findViewById(R.id.RecyclerView1);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
@@ -69,7 +72,7 @@ public class Dictionary extends AppCompatActivity {
                     adapter.notifyDataSetChanged();
                 });
 
-        EditText searchEditText = findViewById(R.id.searchEditText);
+
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}

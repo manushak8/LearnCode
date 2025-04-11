@@ -94,6 +94,7 @@ public class LessonQuizSelectionActivity extends AppCompatActivity implements Re
                                 topicIndex++;
                             }
                         }
+                        adapter.notifyDataSetChanged();
                     }
                 });
     }
