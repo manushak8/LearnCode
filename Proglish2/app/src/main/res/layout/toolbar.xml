@@ -2,26 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/_50sdp"
     android:padding="20dp"
     android:id="@+id/toolbar"
     android:background="@color/background"
     android:gravity="center_vertical">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/_24sdp"
+        android:layout_height="@dimen/_24sdp"
         android:id="@+id/menu"
-        android:src='@drawable/baseline_menu_24'/>
+        android:src='@drawable/baseline_menu_24' />
 
     <TextView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/_27sdp"
         android:layout_weight="1"
-        android:textSize="20sp"
+        android:textSize="@dimen/_15sdp"
         android:text="@string/app_name"
-        android:layout_marginStart="12dp"
-        />
+        android:layout_marginStart="@dimen/_12sdp" />
 
 
 </LinearLayout>

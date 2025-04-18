@@ -1,40 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/DrawerLayout"
+    android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AboutActivity">
 
+    <!-- Main content -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include
-            layout="@layout/toolbar"/>
+        <!-- Toolbar (optional) -->
+        <include layout="@layout/toolbar" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/_200sdp"
-            android:textSize="@dimen/_30sdp"
-            android:text="@string/info" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="24dp">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/about"
+                    android:textSize="@dimen/_20sdp"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:paddingBottom="8dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="IT English помогает программистам, не говорящим по-английски, изучать необходимую техническую лексику, фразы и навыки чтения документации, чтобы улучшить свой путь кодирования. Независимо от того, новичок вы или хотите отточить свой технический жаргон, это приложение станет вашим умным компаньоном."
+                    android:textSize="@dimen/_14sdp"
+                    android:textColor="@color/black"
+                    android:lineSpacingExtra="6dp"
+                    android:paddingBottom="16dp"/>
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
 
+    <!-- Navigation Drawer -->
     <RelativeLayout
         android:layout_width="@dimen/_300sdp"
         android:layout_height="match_parent"
         android:background="@color/white"
         android:layout_gravity="start">
 
-        <include
-            layout="@layout/nav_drawer"/>
-
+        <include layout="@layout/nav_drawer" />
     </RelativeLayout>
-
-
 </androidx.drawerlayout.widget.DrawerLayout>

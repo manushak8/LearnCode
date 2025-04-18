@@ -1,18 +1,17 @@
 package com.example.proglish2;
 
-import android.app.Activity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import androidx.activity.EdgeToEdge;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
+
 import androidx.core.view.GravityCompat;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,7 +20,7 @@ public class AboutActivity extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout dictionary, about, logout;
+    LinearLayout home, dictionary, about, logout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +28,12 @@ public class AboutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
-        drawerLayout = findViewById(R.id.DrawerLayout);
+        drawerLayout = findViewById(R.id.drawerLayout);
         menu = findViewById(R.id.menu);
         about = findViewById(R.id.info);
         logout = findViewById(R.id.logOut);
         dictionary = findViewById(R.id.dictionary);
+        home = findViewById(R.id.home);
 
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,6 +46,14 @@ public class AboutActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 recreate();
+            }
+        });
+
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AboutActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
 

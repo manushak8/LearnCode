@@ -7,6 +7,7 @@ import android.view.View;
 
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -32,7 +33,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
     BottomNavigationView bottomNavigationView;
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout dictionary, about, logout;
+    LinearLayout home, dictionary, about, logout;
+    TextView mail;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,7 +49,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
         about = findViewById(R.id.info);
         logout = findViewById(R.id.logOut);
         dictionary = findViewById(R.id.dictionary);
-        bottomNavigationView = findViewById(R.id.BottomNavigationView);
+        home = findViewById(R.id.home);
+        mail = findViewById(R.id.userEmail);
+        //bottomNavigationView = findViewById(R.id.BottomNavigationView);
 
         if (user == null){
             Intent intent = new Intent(getApplicationContext(), login.class);
@@ -59,10 +63,11 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
                 redirectToLogin();
             } else {
                 if (user.isEmailVerified()) {
+                    mail.setText(user.getEmail());
                     fetchLessonsFromFirestore();
-                    bottomNavigationView.setSelectedItemId(R.id.home);
+                    //bottomNavigationView.setSelectedItemId(R.id.home);
 
-                    bottomNavigationView.setOnItemSelectedListener(item -> {
+                    /*bottomNavigationView.setOnItemSelectedListener(item -> {
                         int itemId = item.getItemId();
                         if (itemId == R.id.home) {
                             return true;
@@ -78,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
                             return true;
                         }
                         return false;
-                    });
+                    });*/
 
                 } else {
                     FirebaseAuth.getInstance().signOut();
@@ -91,6 +96,13 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
                 @Override
                 public void onClick(View view) {
                     openDrawer(drawerLayout);
+                }
+            });
+
+            home.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    recreate();
                 }
             });
 

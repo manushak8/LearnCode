@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -28,9 +30,12 @@ import java.util.List;
 
 public class Dictionary extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
+    FirebaseAuth auth;
+    FirebaseUser user;
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout dictionary, about, logout;
+    LinearLayout home, dictionary, about, logout;
+    TextView mail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,23 +43,37 @@ public class Dictionary extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_dictionary);
 
-        bottomNavigationView = findViewById(R.id.BottomNavigationView);
-        bottomNavigationView.setSelectedItemId(R.id.quiz);
+        //bottomNavigationView = findViewById(R.id.BottomNavigationView);
+        //bottomNavigationView.setSelectedItemId(R.id.quiz);
+        auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
         drawerLayout = findViewById(R.id.DrawerLayout);
         menu = findViewById(R.id.menu);
         about = findViewById(R.id.info);
         logout = findViewById(R.id.logOut);
         dictionary = findViewById(R.id.dictionary);
+        home = findViewById(R.id.home);
+        mail = findViewById(R.id.userEmail);
         RecyclerView recyclerView = findViewById(R.id.RecyclerView1);
         EditText searchEditText = findViewById(R.id.searchEditText);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         List<Word> wordList = new ArrayList<>();
         WordAdapter adapter = new WordAdapter(wordList);
 
+        mail.setText(user.getEmail());
+
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openDrawer(drawerLayout);
+            }
+        });
+
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Dictionary.this, MainActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -84,7 +103,7 @@ public class Dictionary extends AppCompatActivity {
             }
         });
 
-        bottomNavigationView.setOnItemSelectedListener(item -> {
+        /*bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             if (itemId == R.id.home) {
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
@@ -100,7 +119,7 @@ public class Dictionary extends AppCompatActivity {
                 return true;
             }
             return false;
-        });
+        });*/
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

@@ -15,11 +15,12 @@
     <string name="next">Продолжить</string>
     <string name="motivation">Продолжайте! Вы сможете!</string>
     <string name="settings">Настройки</string>
-    <string name="home">Home</string>
+    <string name="home">Главный</string>
     <string name="dictionary">Словарь</string>
     <string name="search">Поиск...</string>
     <string name="info">О приложении</string>
     <string name="Dictionary">Словарь</string>
+    <string name="about">Oб IT English</string>
 
     <!--
     <string-array name="lessons">

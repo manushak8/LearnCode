@@ -18,7 +18,7 @@ public class SettingsActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_settings);
 
-        bottomNavigationView = findViewById(R.id.BottomNavigationView);
+        /*bottomNavigationView = findViewById(R.id.BottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.settings);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
@@ -36,6 +36,6 @@ public class SettingsActivity extends AppCompatActivity {
                 return true;
             }
             return false;
-        });
+        });*/
     }
 }

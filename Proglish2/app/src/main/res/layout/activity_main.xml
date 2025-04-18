@@ -24,14 +24,14 @@
             android:layout_below="@id/toolbar" />
 
 
-        <!-- BottomNavigationView -->
+        <!-- BottomNavigationView
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/BottomNavigationView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             app:menu="@menu/botton_nav_menu"
-            app:itemIconSize="@dimen/_30sdp" />
+            app:itemIconSize="@dimen/_30sdp" /> -->
     </RelativeLayout>
 
     <!-- Navigation Drawer content -->
