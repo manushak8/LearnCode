@@ -1,40 +1,35 @@
 package com.example.proglish2;
 
-import static com.example.proglish2.SplashScreenActivity.listOfQuestions;
-
 import android.content.Intent;
 import android.os.Bundle;
 
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
-
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
+import java.util.ArrayList;
 
-import java.util.Collections;
 import java.util.List;
-
+import java.util.Map;
 
 public class DashboardActivity extends AppCompatActivity {
-    List<QuizModel> allQuestionsList;
+
+    List<QuizModel> allQuestionsList = new ArrayList<>();
     QuizModel quizModel;
     int index = 0;
-    TextView card_question, optionA, optionB, optionC, optionD, exit;
-    CardView cardOA, cardOB, cardOC, cardOD;
-    //FirebaseFirestore db = FirebaseFirestore.getInstance();
-
     int correctCount = 0;
     int wrongCount = 0;
+
+    TextView card_question, optionA, optionB, optionC, optionD, exit;
+    CardView cardOA, cardOB, cardOC, cardOD;
     LinearLayout nextBtn;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,66 +38,81 @@ public class DashboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard);
 
         hooks();
-        allQuestionsList = listOfQuestions;
-        Collections.shuffle(allQuestionsList);
-        quizModel = listOfQuestions.get(index);
-        resetColor();
-        nextBtn.setClickable(false);
-        setAllData();
 
-        //fetchQuestionsFromFirebase();
+        /*String quizId = getIntent().getStringExtra("quizId");
+        if (quizId != null) {
+            fetchQuestionsFromFirebase();
+        } else {
+            Toast.makeText(this, "Quiz name is missing", Toast.LENGTH_SHORT).show();
+            finish();
+        }*/
+
+        fetchQuestionsFromFirebase("quiz1");
 
         exit.setOnClickListener(v -> {
-            Intent intent = new Intent(DashboardActivity.this, LessonQuizSelectionActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(DashboardActivity.this, LessonQuizSelectionActivity.class));
             finish();
         });
-
     }
 
-    /*private void fetchQuestionsFromFirebase() {
-        db = FirebaseFirestore.getInstance();
-        db.collection("questions")
+    private void fetchQuestionsFromFirebase(String quizId) {
+        db.collection("quizzes")
+                .document(quizId)
                 .get()
                 .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
+                    if (task.isSuccessful() && task.getResult() != null) {
                         allQuestionsList.clear();
-                        int count = 0;
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            Log.e("Firebase", "Fetched question: " + document.getString("question"));
-                            QuizModel question = new QuizModel(
-                                    document.getString("question"),
-                                    document.getString("oA"),
-                                    document.getString("oB"),
-                                    document.getString("oC"),
-                                    document.getString("oD"),
-                                    document.getString("answer")
-                            );
-                            allQuestionsList.add(question);
-                            count++;
-                        }
-                        Log.e("Firebase", "Total questions fetched: " + count);
-                        if (!allQuestionsList.isEmpty()) {
-                            Collections.shuffle(allQuestionsList);
-                            quizModel = allQuestionsList.get(0);
-                            setAllData();
-                        } else {
-                            Log.e("Firebase", "No questions found.");
-                            Toast.makeText(DashboardActivity.this, "no questions", Toast.LENGTH_SHORT).show();
+
+                        List<Map<String, Object>> questions = (List<Map<String, Object>>) task.getResult().get("questions");
+
+                        if (questions != null && !questions.isEmpty()) {
+                            for (Map<String, Object> questionData : questions) {
+                                String questionText = (String) questionData.get("question");
+                                List<String> options = (List<String>) questionData.get("options");
+                                Long correctIndexLong = (Long) questionData.get("correctAnswer");
+                                int correctIndex = correctIndexLong != null ? correctIndexLong.intValue() : -1;
+
+                                if (questionText != null && options != null && options.size() == 4 && correctIndex >= 0 && correctIndex < 4) {
+                                    QuizModel question = new QuizModel(
+                                            questionText,
+                                            options.get(0),
+                                            options.get(1),
+                                            options.get(2),
+                                            options.get(3),
+                                            options.get(correctIndex)
+                                    );
+                                    allQuestionsList.add(question);
+                                }
+                            }
+
+                            if (!allQuestionsList.isEmpty()) {
+                                index = 0;
+                                quizModel = allQuestionsList.get(index);
+                                setAllData();
+                            } else {
+                                Toast.makeText(DashboardActivity.this, "Вопросов не найдено.", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     } else {
-                        Log.e("Firebase", "Error getting questions: ", task.getException());
-                        Toast.makeText(DashboardActivity.this, "not received data", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DashboardActivity.this, "Тест не может быть загружен.", Toast.LENGTH_SHORT).show();
                     }
                 });
-    }*/
+    }
+
 
     private void setAllData() {
-        card_question.setText(quizModel.getQuestion());
-        optionA.setText(quizModel.getoA());
-        optionB.setText(quizModel.getoB());
-        optionC.setText(quizModel.getoC());
-        optionD.setText(quizModel.getoD());
+        if (quizModel != null) {
+            card_question.setText(quizModel.getQuestion());
+            optionA.setText(quizModel.getoA());
+            optionB.setText(quizModel.getoB());
+            optionC.setText(quizModel.getoC());
+            optionD.setText(quizModel.getoD());
+            resetColor();
+            enableBtn();
+            nextBtn.setEnabled(false);
+            nextBtn.setClickable(false);
+            nextBtn.setAlpha(0.5f);
+        }
     }
 
     private void hooks() {
@@ -121,16 +131,53 @@ public class DashboardActivity extends AppCompatActivity {
         exit = findViewById(R.id.exit_ic);
     }
 
-    public void correct(CardView selectedCard) {
-        selectedCard.setCardBackgroundColor(getResources().getColor(R.color.green));
-        correctCount++;
-        nextBtn.setClickable(true);
+    public void optionAClick(View view) {
+        optionClick(cardOA, quizModel.getoA());
     }
 
-    public void wrong(CardView selectedCard) {
-        selectedCard.setCardBackgroundColor(getResources().getColor(R.color.red));
-        wrongCount++;
+    public void optionBClick(View view) {
+        optionClick(cardOB, quizModel.getoB());
+    }
 
+    public void optionCClick(View view) {
+        optionClick(cardOC, quizModel.getoC());
+    }
+
+    public void optionDClick(View view) {
+        optionClick(cardOD, quizModel.getoD());
+    }
+
+    private void optionClick(CardView selectedCard, String selectedAnswer) {
+        disableBtn();
+        nextBtn.setEnabled(true);
+        nextBtn.setClickable(true);
+        nextBtn.setAlpha(1f);
+
+        if (selectedAnswer.equals(quizModel.getAnswer())) {
+            selectedCard.setCardBackgroundColor(getResources().getColor(R.color.green));
+            correctCount++;
+        } else {
+            selectedCard.setCardBackgroundColor(getResources().getColor(R.color.red));
+            wrongCount++;
+            highlightCorrectAnswer();
+        }
+
+        nextBtn.setOnClickListener(v -> {
+            if (index < allQuestionsList.size() - 1) {
+                index++;
+                quizModel = allQuestionsList.get(index);
+                setAllData();
+            } else {
+                Intent intent = new Intent(DashboardActivity.this, WonActivity.class);
+                intent.putExtra("correct", correctCount);
+                intent.putExtra("wrong", wrongCount);
+                startActivity(intent);
+                finish();
+            }
+        });
+    }
+
+    private void highlightCorrectAnswer() {
         if (quizModel.getoA().equals(quizModel.getAnswer())) {
             cardOA.setCardBackgroundColor(getResources().getColor(R.color.green));
         } else if (quizModel.getoB().equals(quizModel.getAnswer())) {
@@ -140,76 +187,26 @@ public class DashboardActivity extends AppCompatActivity {
         } else if (quizModel.getoD().equals(quizModel.getAnswer())) {
             cardOD.setCardBackgroundColor(getResources().getColor(R.color.green));
         }
-
-        nextBtn.setClickable(true);
     }
 
-    private void gameWon() {
-        Intent intent = new Intent(DashboardActivity.this, WonActivity.class);
-        intent.putExtra("correct", correctCount);
-        intent.putExtra("wrong", wrongCount);
-        startActivity(intent);
-
-    }
-    public void enableBtn(){
+    private void enableBtn() {
         cardOA.setClickable(true);
         cardOB.setClickable(true);
         cardOC.setClickable(true);
         cardOD.setClickable(true);
     }
 
-    public void disableBtn(){
+    private void disableBtn() {
         cardOA.setClickable(false);
         cardOB.setClickable(false);
         cardOC.setClickable(false);
         cardOD.setClickable(false);
     }
 
-    public void resetColor(){
+    private void resetColor() {
         cardOA.setCardBackgroundColor(getResources().getColor(R.color.white));
         cardOB.setCardBackgroundColor(getResources().getColor(R.color.white));
         cardOC.setCardBackgroundColor(getResources().getColor(R.color.white));
         cardOD.setCardBackgroundColor(getResources().getColor(R.color.white));
-    }
-
-    public void optionAClick(View view) {
-        optionClick(cardOA, quizModel.getoA());
-    }
-    public void optionBClick(View view) {
-        optionClick(cardOB, quizModel.getoB());
-    }
-    public void optionCClick(View view) {
-        optionClick(cardOC, quizModel.getoC());
-    }
-    public void optionDClick(View view) {
-        optionClick(cardOD, quizModel.getoD());
-    }
-
-    public void optionClick(CardView selectedCard, String selectedAnswer) {
-        disableBtn();
-        nextBtn.setEnabled(true);
-        nextBtn.setClickable(true);
-        nextBtn.setAlpha(1f);
-
-        if (selectedAnswer.equals(quizModel.getAnswer())) {
-            correct(selectedCard);
-        } else {
-            wrong(selectedCard);
-        }
-
-        nextBtn.setOnClickListener(v -> {
-            if (index < allQuestionsList.size() - 1) {
-                index++;
-                quizModel = allQuestionsList.get(index);
-                resetColor();
-                setAllData();
-                enableBtn();
-                nextBtn.setEnabled(false);
-                nextBtn.setClickable(false);
-                nextBtn.setAlpha(0.5f);
-            } else {
-                gameWon();
-            }
-        });
     }
 }

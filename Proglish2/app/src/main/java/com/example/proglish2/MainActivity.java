@@ -1,6 +1,6 @@
 package com.example.proglish2;
 
-import android.app.Activity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -17,7 +17,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -30,7 +29,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
     ArrayList<LessonsModel> lessonsModels = new ArrayList<>();
     FirebaseAuth auth;
     FirebaseUser user;
-    BottomNavigationView bottomNavigationView;
     DrawerLayout drawerLayout;
     ImageView menu;
     LinearLayout home, dictionary, about, logout;
@@ -51,7 +49,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
         dictionary = findViewById(R.id.dictionary);
         home = findViewById(R.id.home);
         mail = findViewById(R.id.userEmail);
-        //bottomNavigationView = findViewById(R.id.BottomNavigationView);
 
         if (user == null){
             Intent intent = new Intent(getApplicationContext(), login.class);
@@ -65,25 +62,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
                 if (user.isEmailVerified()) {
                     mail.setText(user.getEmail());
                     fetchLessonsFromFirestore();
-                    //bottomNavigationView.setSelectedItemId(R.id.home);
-
-                    /*bottomNavigationView.setOnItemSelectedListener(item -> {
-                        int itemId = item.getItemId();
-                        if (itemId == R.id.home) {
-                            return true;
-                        } else if (itemId == R.id.quiz) {
-                            startActivity(new Intent(getApplicationContext(), Dictionary.class));
-                            overridePendingTransition(R.anim.slide_in_rigth, R.anim.slide_out_left);
-                            finish();
-                            return true;
-                        } else if (itemId == R.id.settings) {
-                            startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
-                            overridePendingTransition(R.anim.slide_in_rigth, R.anim.slide_out_left);
-                            finish();
-                            return true;
-                        }
-                        return false;
-                    });*/
 
                 } else {
                     FirebaseAuth.getInstance().signOut();

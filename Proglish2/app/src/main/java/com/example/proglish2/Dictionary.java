@@ -17,9 +17,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -29,7 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Dictionary extends AppCompatActivity {
-    BottomNavigationView bottomNavigationView;
     FirebaseAuth auth;
     FirebaseUser user;
     DrawerLayout drawerLayout;
@@ -43,8 +39,7 @@ public class Dictionary extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_dictionary);
 
-        //bottomNavigationView = findViewById(R.id.BottomNavigationView);
-        //bottomNavigationView.setSelectedItemId(R.id.quiz);
+
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
         drawerLayout = findViewById(R.id.DrawerLayout);
@@ -103,25 +98,6 @@ public class Dictionary extends AppCompatActivity {
             }
         });
 
-        /*bottomNavigationView.setOnItemSelectedListener(item -> {
-            int itemId = item.getItemId();
-            if (itemId == R.id.home) {
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                overridePendingTransition(R.anim.slide_in_rigth, R.anim.slide_out_left);
-                finish();
-                return true;
-            } else if (itemId == R.id.quiz) {
-                return true;
-            } else if (itemId == R.id.settings) {
-                startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
-                overridePendingTransition(R.anim.slide_in_rigth, R.anim.slide_out_left);
-                finish();
-                return true;
-            }
-            return false;
-        });*/
-
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
@@ -131,7 +107,6 @@ public class Dictionary extends AppCompatActivity {
                     for (DocumentSnapshot doc : queryDocumentSnapshots) {
                         String word = doc.getId();
                         String translation = doc.getString("translation");
-                        //String example = doc.getString("example");
                         String example = doc.getString("example") != null ? doc.getString("example") : "";
 
                         wordList.add(new Word(word, translation, example));

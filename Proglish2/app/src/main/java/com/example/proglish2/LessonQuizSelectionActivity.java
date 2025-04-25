@@ -13,7 +13,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -27,11 +26,9 @@ public class LessonQuizSelectionActivity extends AppCompatActivity implements Re
     RecyclerView recyclerView;
     LessonQuizAdapter adapter;
     FirebaseFirestore db;
-
     DrawerLayout drawerLayout;
     ImageView menu;
     LinearLayout home, dictionary, about, logout;
-    BottomNavigationView bottomNavigationView;
 
 
     @Override
@@ -49,7 +46,6 @@ public class LessonQuizSelectionActivity extends AppCompatActivity implements Re
         logout = findViewById(R.id.logOut);
         dictionary = findViewById(R.id.dictionary);
         home = findViewById(R.id.home);
-        //bottomNavigationView = findViewById(R.id.BottomNavigationView);
 
         adapter = new LessonQuizAdapter(this, lessonQuizList, this);
         recyclerView.setAdapter(adapter);
@@ -97,29 +93,6 @@ public class LessonQuizSelectionActivity extends AppCompatActivity implements Re
                 redirectToLogin();
             }
         });
-
-        /*bottomNavigationView.setSelectedItemId(R.id.home);
-
-        bottomNavigationView.setOnItemSelectedListener(item -> {
-            int itemId = item.getItemId();
-            if (itemId == R.id.home) {
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                overridePendingTransition(R.anim.slide_in_rigth, R.anim.slide_out_left);
-                finish();
-                return true;
-            } else if (itemId == R.id.quiz) {
-                startActivity(new Intent(getApplicationContext(), Dictionary.class));
-                overridePendingTransition(R.anim.slide_in_rigth, R.anim.slide_out_left);
-                finish();
-                return true;
-            } else if (itemId == R.id.settings) {
-                startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
-                overridePendingTransition(R.anim.slide_in_rigth, R.anim.slide_out_left);
-                finish();
-                return true;
-            }
-            return false;
-        });*/
     }
 
     private void fetchLessonQuizData() {
@@ -170,6 +143,8 @@ public class LessonQuizSelectionActivity extends AppCompatActivity implements Re
                 intent.putExtra("lessonID", content.getId());
             } else {
                 intent = new Intent(this, DashboardActivity.class);
+                intent.putExtra("quizId", content.getId());
+                //Log.d("QUIZ_INTENT", "Passing quizId: " + content.getId());
             }
 
             startActivity(intent);
