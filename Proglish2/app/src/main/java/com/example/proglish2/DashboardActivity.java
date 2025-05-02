@@ -14,6 +14,7 @@ import androidx.cardview.widget.CardView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -84,6 +85,8 @@ public class DashboardActivity extends AppCompatActivity {
                                     allQuestionsList.add(question);
                                 }
                             }
+
+                            Collections.shuffle(allQuestionsList);
 
                             if (!allQuestionsList.isEmpty()) {
                                 index = 0;

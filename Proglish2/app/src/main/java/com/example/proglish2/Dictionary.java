@@ -39,9 +39,9 @@ public class Dictionary extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_dictionary);
 
-
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
+
         drawerLayout = findViewById(R.id.DrawerLayout);
         menu = findViewById(R.id.menu);
         about = findViewById(R.id.info);

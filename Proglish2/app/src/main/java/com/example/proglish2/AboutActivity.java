@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,12 +16,16 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class AboutActivity extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     ImageView menu;
     LinearLayout home, dictionary, about, logout;
+    FirebaseAuth auth;
+    FirebaseUser user;
+    TextView mail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +33,18 @@ public class AboutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
+        auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
+
         drawerLayout = findViewById(R.id.drawerLayout);
         menu = findViewById(R.id.menu);
         about = findViewById(R.id.info);
         logout = findViewById(R.id.logOut);
         dictionary = findViewById(R.id.dictionary);
         home = findViewById(R.id.home);
+        mail = findViewById(R.id.userEmail);
+
+        mail.setText(user.getEmail());
 
         menu.setOnClickListener(new View.OnClickListener() {
             @Override

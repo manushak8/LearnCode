@@ -1,6 +1,7 @@
 package com.example.proglish2;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,12 +14,20 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.StyleSpan;
+
+import static android.graphics.Typeface.BOLD;
 
 public class LessonsDescription extends AppCompatActivity {
     private TextView lessonNameTextView, wordTextView, exit, nextButtonText;
     private LinearLayout next_button;
     private FirebaseFirestore db;
-    private List<String> wordsList = new ArrayList<>();
+    private List<CharSequence> wordsList = new ArrayList<>();
     private int currentIndex = 0;
     ImageView backImageView;
 
@@ -65,9 +74,29 @@ public class LessonsDescription extends AppCompatActivity {
                             for (int i = 1; i <= 10; i++) {
                                 String description = document.getString("description" + i);
                                 if (description != null) {
-                                    String formattedText = description.replaceAll("([.!?]) ", "$1\n");
+                                    String[] parts = description.split("Translation: ");
+                                    if (parts.length >= 2) {
+                                        String keyword = parts[0].trim();
+                                        String[] subParts = parts[1].split("Example: ");
+                                        String translation = "Translation: " + subParts[0].trim();
+                                        String example = subParts.length > 1 ? "Example: " + subParts[1].trim() : "";
 
-                                    wordsList.add(formattedText);
+                                        SpannableStringBuilder formattedText = new SpannableStringBuilder();
+
+                                        // Format keyword
+                                        SpannableString keywordSpan = new SpannableString(keyword);
+                                        keywordSpan.setSpan(new StyleSpan(BOLD), 0, keyword.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                        keywordSpan.setSpan(new RelativeSizeSpan(1.5f), 0, keyword.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                        keywordSpan.setSpan(new ForegroundColorSpan(Color.WHITE), 0, keyword.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                                        formattedText.append(keywordSpan);
+                                        formattedText.append("\n");
+                                        formattedText.append(translation);
+                                        formattedText.append("\n");
+                                        formattedText.append(example);
+
+                                        wordsList.add(formattedText);
+                                    }
                                 }
                             }
                             if (!wordsList.isEmpty()) {
@@ -81,24 +110,21 @@ public class LessonsDescription extends AppCompatActivity {
     private void showNextWord() {
         if (currentIndex < wordsList.size() - 1) {
             currentIndex++;
-            wordTextView.setText(wordsList.get(currentIndex));
+            wordTextView.setText((Spannable) wordsList.get(currentIndex));
             updateNextButtonText();
-
         } else {
             Intent intent = new Intent(LessonsDescription.this, LessonQuizSelectionActivity.class);
             startActivity(intent);
             finish();
         }
-
     }
 
     private void showPreviousWord() {
         if (currentIndex > 0) {
             currentIndex--;
-            wordTextView.setText(wordsList.get(currentIndex));
+            wordTextView.setText((Spannable) wordsList.get(currentIndex));
             updateNextButtonText();
         }
-
     }
 
     private void updateNextButtonText() {

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -29,13 +31,18 @@ public class LessonQuizSelectionActivity extends AppCompatActivity implements Re
     DrawerLayout drawerLayout;
     ImageView menu;
     LinearLayout home, dictionary, about, logout;
-
+    FirebaseAuth auth;
+    FirebaseUser user;
+    TextView mail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lesson_quiz_selection);
+
+        auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
 
         db = FirebaseFirestore.getInstance();
         recyclerView = findViewById(R.id.recyclerView);
@@ -46,11 +53,14 @@ public class LessonQuizSelectionActivity extends AppCompatActivity implements Re
         logout = findViewById(R.id.logOut);
         dictionary = findViewById(R.id.dictionary);
         home = findViewById(R.id.home);
+        mail = findViewById(R.id.userEmail);
 
         adapter = new LessonQuizAdapter(this, lessonQuizList, this);
         recyclerView.setAdapter(adapter);
 
         fetchLessonQuizData();
+
+        mail.setText(user.getEmail());
 
         menu.setOnClickListener(new View.OnClickListener() {
             @Override

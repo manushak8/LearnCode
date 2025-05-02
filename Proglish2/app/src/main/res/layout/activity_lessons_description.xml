@@ -37,19 +37,17 @@
 
     </RelativeLayout>
 
-    <!-- Դասի վերնագիր -->
     <TextView
         android:id="@+id/lessonName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/_8sdp"
         android:text="name"
-        android:textSize="@dimen/_18sdp"
+        android:textSize="@dimen/_22sdp"
         android:textColor="#ffffff"
         android:textStyle="bold"
         android:paddingBottom="8dp" />
 
-    <!-- Բովանդակությունը -->
     <TextView
         android:id="@+id/lessonDescription"
         android:layout_width="match_parent"
@@ -58,11 +56,10 @@
         android:layout_weight="1"
         android:text="Description"
         android:textSize="@dimen/_14sdp"
-        android:textColor="#dcdde1"
+        android:textColor="@color/white"
         android:lineSpacingExtra="4dp"
         android:paddingBottom="16dp" />
 
-    <!-- Հաջորդ դասին անցնելու կոճակ -->
     <LinearLayout
         android:id="@+id/next_button"
         android:layout_width="match_parent"

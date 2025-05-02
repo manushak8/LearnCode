@@ -25,18 +25,6 @@
             android:layout_weight="1"
             android:padding="16dp" />
 
-
-
-        <!-- Optional Bottom Navigation -->
-        <!--
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/BottomNavigationView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/windowBackground"
-            app:menu="@menu/botton_nav_menu"
-            app:itemIconSize="@dimen/_30sdp" />
-        -->
     </LinearLayout>
 
     <!-- Navigation Drawer -->

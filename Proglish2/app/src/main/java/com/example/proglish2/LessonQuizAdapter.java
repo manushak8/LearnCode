@@ -84,4 +84,3 @@ public class LessonQuizAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 }
-
