@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/_40sdp"
-        android:background="#3CB2D7">
+        android:background="@drawable/toolbar_gradient">
 
         <ImageView
             android:id="@+id/back_ic"

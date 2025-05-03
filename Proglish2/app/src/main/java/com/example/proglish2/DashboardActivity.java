@@ -11,10 +11,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -102,6 +104,27 @@ public class DashboardActivity extends AppCompatActivity {
                 });
     }
 
+    private void saveQuizResultToFirebase() {
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        int totalScore = correctCount;
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("userId", userId);
+        result.put("userEmail", userEmail);
+        result.put("score", totalScore);
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Leaderboard")
+                .document(userId)
+                .set(result)
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(this, "Result saved successfully!", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Failed to save result: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+    }
 
     private void setAllData() {
         if (quizModel != null) {
@@ -174,6 +197,7 @@ public class DashboardActivity extends AppCompatActivity {
                 Intent intent = new Intent(DashboardActivity.this, WonActivity.class);
                 intent.putExtra("correct", correctCount);
                 intent.putExtra("wrong", wrongCount);
+                saveQuizResultToFirebase();
                 startActivity(intent);
                 finish();
             }

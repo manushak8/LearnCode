@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
             about.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(MainActivity.this, AboutActivity.class);
+                    Intent intent = new Intent(MainActivity.this, LeaderboardActivity.class); //change to About activity
                     startActivity(intent);
                 }
             });

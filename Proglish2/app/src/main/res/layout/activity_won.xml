@@ -3,16 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:background="#2C43B8"
+    android:background="@drawable/background_gradient"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".WonActivity">
 
+    <!-- Toolbar -->
     <RelativeLayout
         android:id="@+id/toolBar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        android:background="#3CB2D7">
+        android:layout_height="@dimen/_50sdp"
+        android:background="@drawable/toolbar_gradient"
+        android:elevation="8dp">
 
         <TextView
             android:id="@+id/exit_ic"
@@ -25,28 +27,31 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/_10sdp"
             android:textColor="@color/white"
-            android:textSize="@dimen/_18sdp"/>
-
+            android:textSize="@dimen/_18sdp"
+            android:fontFamily="sans-serif-medium" />
     </RelativeLayout>
 
+    <!-- Circular Progress Area -->
     <RelativeLayout
         android:id="@+id/rl2"
         android:layout_marginTop="@dimen/_20sdp"
         android:layout_below="@+id/toolBar"
-        android:layout_width="@dimen/_150sdp"
-        android:layout_height="@dimen/_150sdp"
-        android:layout_centerHorizontal="true" >
+        android:layout_width="@dimen/_200sdp"
+        android:layout_height="@dimen/_200sdp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/circular_container_background"
+        android:elevation="6dp">
 
         <com.mikhaellopez.circularprogressbar.CircularProgressBar
             android:id="@+id/circularProgressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:cpb_background_progressbar_color="@color/red"
+            app:cpb_background_progressbar_color="@color/light_blue"
             app:cpb_background_progressbar_width="@dimen/_10sdp"
             app:cpb_progress_direction="to_right"
             app:cpb_progressbar_color="@color/green"
             app:cpb_progressbar_width="@dimen/_10sdp"
-            app:cpb_round_border="false"
+            app:cpb_round_border="true"
             app:cpb_progress_max="10" />
 
         <TextView
@@ -55,14 +60,16 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:textColor="@color/white"
-            android:textSize="@dimen/_27sdp" />
-
+            android:textSize="@dimen/_27sdp"
+            android:fontFamily="sans-serif-light" />
     </RelativeLayout>
-    
+
+    <!-- Motivation Section -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/rl2">
+        android:layout_below="@id/rl2"
+        android:layout_marginTop="@dimen/_20sdp">
 
         <TextView
             android:layout_width="match_parent"
@@ -70,15 +77,14 @@
             android:gravity="center"
             android:text="@string/motivation"
             android:textColor="@color/white"
-            android:textSize="@dimen/_20sdp"/>
+            android:textSize="@dimen/_20sdp"
+            android:fontFamily="sans-serif-medium" />
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/_60sdp"
-            android:background="@drawable/img_1"
-            />
-
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_1" />
     </RelativeLayout>
-
 </RelativeLayout>
