@@ -30,7 +30,7 @@ public class LessonQuizSelectionActivity extends AppCompatActivity implements Re
     FirebaseFirestore db;
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout home, dictionary, about, logout;
+    LinearLayout home, dictionary, leaderboard, about, logout;
     FirebaseAuth auth;
     FirebaseUser user;
     TextView mail;
@@ -52,6 +52,7 @@ public class LessonQuizSelectionActivity extends AppCompatActivity implements Re
         about = findViewById(R.id.info);
         logout = findViewById(R.id.logOut);
         dictionary = findViewById(R.id.dictionary);
+        leaderboard = findViewById(R.id.leaderboard);
         home = findViewById(R.id.home);
         mail = findViewById(R.id.userEmail);
 
@@ -89,6 +90,14 @@ public class LessonQuizSelectionActivity extends AppCompatActivity implements Re
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(LessonQuizSelectionActivity.this, Dictionary.class);
+                startActivity(intent);
+            }
+        });
+
+        leaderboard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LessonQuizSelectionActivity.this, LeaderboardActivity.class);
                 startActivity(intent);
             }
         });

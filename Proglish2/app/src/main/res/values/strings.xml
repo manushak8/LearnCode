@@ -21,6 +21,7 @@
     <string name="info">О приложении</string>
     <string name="Dictionary">Словарь</string>
     <string name="about">Oб IT English</string>
+    <string name="leaderboard">Таблица лидеров</string>
 
     <!--
     <string-array name="lessons">

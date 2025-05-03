@@ -8,4 +8,8 @@
     <color name="primary_text">#3B82F6</color>
     <color name="yellow">#FFFF00</color>
     <color name="light_blue">#ADD8E6</color>
+    <color name="background_color">#F1F1F1</color>
+    <color name="primary_text_color">#212121</color>
+    <color name="secondary_text_color">#757575</color>
+    <color name="toolbar_color">#6200EA</color>
 </resources>

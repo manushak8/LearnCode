@@ -1,6 +1,5 @@
 package com.example.proglish2;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -22,7 +21,7 @@ public class AboutActivity extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout home, dictionary, about, logout;
+    LinearLayout home, dictionary, leaderboard, about, logout;
     FirebaseAuth auth;
     FirebaseUser user;
     TextView mail;
@@ -41,6 +40,7 @@ public class AboutActivity extends AppCompatActivity {
         about = findViewById(R.id.info);
         logout = findViewById(R.id.logOut);
         dictionary = findViewById(R.id.dictionary);
+        leaderboard = findViewById(R.id.leaderboard);
         home = findViewById(R.id.home);
         mail = findViewById(R.id.userEmail);
 
@@ -72,6 +72,14 @@ public class AboutActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(AboutActivity.this, Dictionary.class);
+                startActivity(intent);
+            }
+        });
+
+        leaderboard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AboutActivity.this, LeaderboardActivity.class);
                 startActivity(intent);
             }
         });

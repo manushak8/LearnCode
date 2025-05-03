@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
     FirebaseUser user;
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout home, dictionary, about, logout;
+    LinearLayout home, dictionary, leaderboard, about, logout;
     TextView mail;
 
     @Override
@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
         logout = findViewById(R.id.logOut);
         dictionary = findViewById(R.id.dictionary);
         home = findViewById(R.id.home);
+        leaderboard = findViewById(R.id.leaderboard);
         mail = findViewById(R.id.userEmail);
 
         if (user == null){
@@ -96,6 +97,14 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(MainActivity.this, Dictionary.class);
+                    startActivity(intent);
+                }
+            });
+
+            leaderboard.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(MainActivity.this, LeaderboardActivity.class);
                     startActivity(intent);
                 }
             });

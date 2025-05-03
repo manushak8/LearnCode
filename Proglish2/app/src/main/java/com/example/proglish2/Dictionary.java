@@ -30,7 +30,7 @@ public class Dictionary extends AppCompatActivity {
     FirebaseUser user;
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout home, dictionary, about, logout;
+    LinearLayout home, dictionary, leaderboard, about, logout;
     TextView mail;
 
     @Override
@@ -47,6 +47,7 @@ public class Dictionary extends AppCompatActivity {
         about = findViewById(R.id.info);
         logout = findViewById(R.id.logOut);
         dictionary = findViewById(R.id.dictionary);
+        leaderboard = findViewById(R.id.leaderboard);
         home = findViewById(R.id.home);
         mail = findViewById(R.id.userEmail);
         RecyclerView recyclerView = findViewById(R.id.RecyclerView1);
@@ -84,6 +85,14 @@ public class Dictionary extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 recreate();
+            }
+        });
+
+        leaderboard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Dictionary.this, LeaderboardActivity.class);
+                startActivity(intent);
             }
         });
 

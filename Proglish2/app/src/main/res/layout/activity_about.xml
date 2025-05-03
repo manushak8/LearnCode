@@ -11,49 +11,55 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/background_color">
 
-        <!-- Toolbar (optional) -->
         <include layout="@layout/toolbar" />
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="24dp">
+            android:padding="@dimen/_16sdp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/background_rounded"
+                android:padding="@dimen/_16sdp"
+                android:elevation="4dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/about"
-                    android:textSize="@dimen/_20sdp"
+                    android:textSize="@dimen/_24sdp"
                     android:layout_gravity="center"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:paddingBottom="8dp"/>
+                    android:textColor="@color/primary_text_color"
+                    android:paddingBottom="@dimen/_12sdp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:text="IT English помогает программистам, не говорящим по-английски, изучать необходимую техническую лексику, фразы и навыки чтения документации, чтобы улучшить свой путь кодирования. Независимо от того, новичок вы или хотите отточить свой технический жаргон, это приложение станет вашим умным компаньоном."
-                    android:textSize="@dimen/_14sdp"
-                    android:textColor="@color/black"
-                    android:lineSpacingExtra="6dp"
-                    android:paddingBottom="16dp"/>
+                    android:textSize="@dimen/_16sdp"
+                    android:textColor="@color/secondary_text_color"
+                    android:lineSpacingExtra="@dimen/_4sdp"
+                    android:paddingBottom="@dimen/_16sdp"/>
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
 
     <!-- Navigation Drawer -->
     <RelativeLayout
-        android:layout_width="@dimen/_300sdp"
+        android:layout_width="@dimen/_280sdp"
         android:layout_height="match_parent"
         android:background="@color/white"
-        android:layout_gravity="start">
+        android:layout_gravity="start"
+        android:elevation="8dp">
 
         <include layout="@layout/nav_drawer" />
     </RelativeLayout>
