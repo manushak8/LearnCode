@@ -13,6 +13,8 @@ import androidx.cardview.widget.CardView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+
 import java.util.ArrayList;
 
 import java.util.Collections;
@@ -42,15 +44,9 @@ public class DashboardActivity extends AppCompatActivity {
 
         hooks();
 
-        /*String quizId = getIntent().getStringExtra("quizId");
-        if (quizId != null) {
-            fetchQuestionsFromFirebase();
-        } else {
-            Toast.makeText(this, "Quiz name is missing", Toast.LENGTH_SHORT).show();
-            finish();
-        }*/
+        String quizId = getIntent().getStringExtra("quizId");
 
-        fetchQuestionsFromFirebase("quiz1");
+        fetchQuestionsFromFirebase("quiz" + quizId);
 
         exit.setOnClickListener(v -> {
             startActivity(new Intent(DashboardActivity.this, LessonQuizSelectionActivity.class));
@@ -107,7 +103,7 @@ public class DashboardActivity extends AppCompatActivity {
     private void saveQuizResultToFirebase() {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        int totalScore = correctCount;
+        int totalScore = correctCount * 10;
 
         Map<String, Object> result = new HashMap<>();
         result.put("userId", userId);

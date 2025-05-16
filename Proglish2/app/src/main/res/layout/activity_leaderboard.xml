@@ -20,7 +20,7 @@
             android:id="@+id/leaderboardTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Leaderboard"
+            android:text="@string/leaderboard"
             android:textSize="@dimen/_24sdp"
             android:textStyle="bold"
             android:gravity="center"
@@ -28,15 +28,16 @@
             android:paddingBottom="@dimen/_16sdp"
             android:textColor="@color/black" />
 
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/leaderboardRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:scrollbars="vertical"
-            android:padding="@dimen/_16sdp"/>
+            android:padding="@dimen/_4sdp"/>
 
-        
+
     </LinearLayout>
 
     <RelativeLayout

@@ -48,7 +48,7 @@
             android:padding="@dimen/_10sdp"
             android:textSize="@dimen/_18sdp"
             android:gravity="center"
-            android:text="What is the capital of France?"
+            android:text="q"
             android:textColor="@color/black"
             android:textStyle="bold">
         </TextView>
@@ -79,7 +79,7 @@
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_16sdp"
-                android:text="A. Paris" />
+                android:text="A" />
         </androidx.cardview.widget.CardView>
 
         <!-- Option B -->
@@ -100,7 +100,7 @@
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_16sdp"
-                android:text="B. London" />
+                android:text="B" />
         </androidx.cardview.widget.CardView>
 
         <!-- Option C -->
@@ -121,7 +121,7 @@
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_16sdp"
-                android:text="C. Berlin" />
+                android:text="C" />
         </androidx.cardview.widget.CardView>
 
         <!-- Option D -->
@@ -142,7 +142,7 @@
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_16sdp"
-                android:text="D. Madrid"/>
+                android:text="D"/>
         </androidx.cardview.widget.CardView>
     </LinearLayout>
 

@@ -163,7 +163,6 @@ public class LessonQuizSelectionActivity extends AppCompatActivity implements Re
             } else {
                 intent = new Intent(this, DashboardActivity.class);
                 intent.putExtra("quizId", content.getId());
-                //Log.d("QUIZ_INTENT", "Passing quizId: " + content.getId());
             }
 
             startActivity(intent);
