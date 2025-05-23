@@ -12,7 +12,7 @@
     <!-- Header with Exit Button -->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
+        android:layout_height="@dimen/_35sdp"
         android:background="@drawable/toolbar_gradient">
 
         <TextView
@@ -24,7 +24,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/_10sdp"
             android:textColor="@color/white"
-            android:textSize="@dimen/_18sdp"
+            android:textSize="@dimen/_15sdp"
             android:clickable="true"
             android:focusable="true"/>
     </RelativeLayout>
@@ -32,7 +32,7 @@
     <!-- Question Card -->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_100sdp"
+        android:layout_height="@dimen/_80sdp"
         app:cardCornerRadius="@dimen/_15sdp"
         app:cardElevation="@dimen/_4sdp"
         android:layout_marginStart="@dimen/_10sdp"
@@ -66,7 +66,7 @@
             android:id="@+id/cardA"
             android:onClick="optionAClick"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
+            android:layout_height="@dimen/_40sdp"
             app:cardCornerRadius="@dimen/_10sdp"
             app:cardElevation="@dimen/_4sdp"
             android:layout_margin="@dimen/_10sdp"
@@ -87,7 +87,7 @@
             android:id="@+id/cardB"
             android:onClick="optionBClick"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
+            android:layout_height="@dimen/_40sdp"
             app:cardCornerRadius="@dimen/_10sdp"
             app:cardElevation="@dimen/_4sdp"
             android:layout_margin="@dimen/_10sdp"
@@ -103,12 +103,13 @@
                 android:text="B" />
         </androidx.cardview.widget.CardView>
 
+
         <!-- Option C -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardC"
             android:onClick="optionCClick"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
+            android:layout_height="@dimen/_40sdp"
             app:cardCornerRadius="@dimen/_10sdp"
             app:cardElevation="@dimen/_4sdp"
             android:layout_margin="@dimen/_10sdp"
@@ -129,7 +130,7 @@
             android:id="@+id/cardD"
             android:onClick="optionDClick"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
+            android:layout_height="@dimen/_40sdp"
             app:cardCornerRadius="@dimen/_10sdp"
             app:cardElevation="@dimen/_4sdp"
             android:layout_margin="@dimen/_10sdp"
@@ -151,7 +152,7 @@
         android:id="@+id/next_btn"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
-        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginStart="@dimen/_35sdp"
         android:layout_marginEnd="@dimen/_35sdp"
         android:gravity="center"

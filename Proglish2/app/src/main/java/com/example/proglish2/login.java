@@ -22,7 +22,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class login extends AppCompatActivity  {
 
     TextInputEditText editTextEmail, editTextPassword;
-    Button buttonLogin;
+    Button buttonLogin, buttonTestUser;
     FirebaseAuth mAuth;
     ProgressBar progressBar;
     TextView textView;
@@ -30,9 +30,13 @@ public class login extends AppCompatActivity  {
     @Override
     public void onStart() {
         super.onStart();
+        mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
-            if (currentUser.isEmailVerified()) {
+            if (
+                    "individualproject2025@gmail.com".equals(currentUser.getEmail())
+                            || currentUser.isEmailVerified()
+            ) {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
                 finish();
@@ -52,6 +56,7 @@ public class login extends AppCompatActivity  {
         editTextEmail = findViewById(R.id.email);
         editTextPassword = findViewById(R.id.password);
         buttonLogin = findViewById(R.id.btn_login);
+        buttonTestUser = findViewById(R.id.btn_test_user);
         progressBar = findViewById(R.id.progressBar);
         textView = findViewById(R.id.registerNow);
 
@@ -61,8 +66,8 @@ public class login extends AppCompatActivity  {
             @Override
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
-                String email = String.valueOf(editTextEmail.getText());
-                String password = String.valueOf(editTextPassword.getText());
+                String email = String.valueOf(editTextEmail.getText()).trim();
+                String password = String.valueOf(editTextPassword.getText()).trim();
 
                 if (TextUtils.isEmpty(email)) {
                     Toast.makeText(login.this, "Enter email", Toast.LENGTH_SHORT).show();
@@ -83,18 +88,65 @@ public class login extends AppCompatActivity  {
                                 progressBar.setVisibility(View.GONE);
                                 if (task.isSuccessful()) {
                                     FirebaseUser user = mAuth.getCurrentUser();
-                                    if (user != null && user.isEmailVerified()) {
-                                        Toast.makeText(login.this, "Login successful", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                        startActivity(intent);
-                                        finish();
-                                    } else {
-                                        mAuth.signOut();
-                                        Toast.makeText(login.this, "Please verify your email.", Toast.LENGTH_LONG).show();
+                                    if (user != null) {
+                                        if ("individualproject2025@gmail.com".equals(user.getEmail())) {
+                                            Toast.makeText(login.this, "Login successful (Test User)", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                        else if (user.isEmailVerified()) {
+                                            Toast.makeText(login.this, "Login successful", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                            startActivity(intent);
+                                            finish();
+                                        } else {
+                                            mAuth.signOut();
+                                            Toast.makeText(login.this, "Please verify your email.", Toast.LENGTH_LONG).show();
+                                        }
                                     }
                                 } else {
-
                                     Toast.makeText(login.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+            }
+        });
+
+        // TEST USER Login
+        buttonTestUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
+                final String testEmail = "individualproject2025@gmail.com";
+                final String testPassword = "Samsung2025";
+
+                mAuth.signInWithEmailAndPassword(testEmail, testPassword)
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    progressBar.setVisibility(View.GONE);
+                                    Toast.makeText(login.this, "Login successful (Test User)", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                } else {
+                                    mAuth.createUserWithEmailAndPassword(testEmail, testPassword)
+                                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<AuthResult> regTask) {
+                                                    progressBar.setVisibility(View.GONE);
+                                                    if (regTask.isSuccessful()) {
+                                                        Toast.makeText(login.this, "Test user registered and logged in!", Toast.LENGTH_SHORT).show();
+                                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                                        startActivity(intent);
+                                                        finish();
+                                                    } else {
+                                                        Toast.makeText(login.this, "Test user login/register failed.", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                            });
                                 }
                             }
                         });

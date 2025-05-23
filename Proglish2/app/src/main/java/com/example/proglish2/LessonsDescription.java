@@ -78,8 +78,8 @@ public class LessonsDescription extends AppCompatActivity {
                                     if (parts.length >= 2) {
                                         String keyword = parts[0].trim();
                                         String[] subParts = parts[1].split("Example: ");
-                                        String translation = "Translation: " + subParts[0].trim();
-                                        String example = subParts.length > 1 ? "Example: " + subParts[1].trim() : "";
+                                        String translation = "Перевод: " + subParts[0].trim();
+                                        String example = subParts.length > 1 ? "Пример: " + subParts[1].trim() : "";
 
                                         SpannableStringBuilder formattedText = new SpannableStringBuilder();
 
