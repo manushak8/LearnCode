@@ -1,21 +1,56 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/_50sdp"
-    android:orientation="vertical"
-    android:gravity="center"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
     android:background="#B0CEFA"
-    android:padding="8dp"
-    android:elevation="4dp">
+    android:padding="@dimen/_8sdp"
+    android:elevation="@dimen/_4sdp">
 
+    <!-- Վերնագիր ձախում -->
     <TextView
         android:id="@+id/headerTitle"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="8dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/_8sdp"
+        android:paddingEnd="@dimen/_8sdp"
         android:text="@string/app_name"
         android:textSize="@dimen/_18sdp"
         android:textStyle="bold"
         android:textColor="@color/black"
         android:fontFamily="sans-serif-medium" />
+
+    <!-- Աջ կողմում՝ կլոր progress bar + տոկոս (կողք-կողքի) -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <com.mikhaellopez.circularprogressbar.CircularProgressBar
+            android:id="@+id/headerProgress"
+            android:layout_width="@dimen/_32sdp"
+            android:layout_height="@dimen/_32sdp"
+            app:cpb_background_progressbar_color="@color/light_blue"
+            app:cpb_background_progressbar_width="@dimen/_4sdp"
+            app:cpb_progress_direction="to_right"
+            app:cpb_progressbar_color="@color/green"
+            app:cpb_progressbar_width="@dimen/_4sdp"
+            app:cpb_round_border="true"
+            app:cpb_progress_max="100"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/headerProgressText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="@dimen/_12sdp"
+            android:gravity="center_vertical"
+            android:visibility="gone"
+            android:layout_marginStart="@dimen/_8sdp"/>
+    </LinearLayout>
 </LinearLayout>

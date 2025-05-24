@@ -4,10 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
 import java.util.ArrayList;
 
@@ -49,20 +52,35 @@ public class LessonQuizAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         LessonQuizItem item = items.get(position);
 
         if (holder instanceof HeaderViewHolder) {
-            ((HeaderViewHolder) holder).headerTitle.setText(((LessonQuizHeader) item).getTitle());
+            LessonQuizHeader header = (LessonQuizHeader) item;
+            ((HeaderViewHolder) holder).headerTitle.setText(header.getTitle());
+
+            // Progress binding
+            if (header.getProgress() >= 0) {
+                ((HeaderViewHolder) holder).headerProgress.setVisibility(View.VISIBLE);
+                ((HeaderViewHolder) holder).headerProgress.setProgress(header.getProgress());
+                ((HeaderViewHolder) holder).headerProgressText.setVisibility(View.VISIBLE);
+                ((HeaderViewHolder) holder).headerProgressText.setText(header.getProgress() + "%");
+            } else {
+                ((HeaderViewHolder) holder).headerProgress.setVisibility(View.GONE);
+                ((HeaderViewHolder) holder).headerProgressText.setVisibility(View.GONE);
+            }
         } else if (holder instanceof ContentViewHolder) {
             ((ContentViewHolder) holder).name.setText(((LessonQuizContent) item).getName());
         }
     }
 
-    // ViewHolders
-
+    // ViewHolder-ները՝ ավելացրու ProgressBar և TextView հղումները
     public static class HeaderViewHolder extends RecyclerView.ViewHolder {
         TextView headerTitle;
+        CircularProgressBar headerProgress;
+        TextView headerProgressText;
 
         public HeaderViewHolder(@NonNull View itemView) {
             super(itemView);
             headerTitle = itemView.findViewById(R.id.headerTitle);
+            headerProgress = itemView.findViewById(R.id.headerProgress);
+            headerProgressText = itemView.findViewById(R.id.headerProgressText);
         }
     }
 

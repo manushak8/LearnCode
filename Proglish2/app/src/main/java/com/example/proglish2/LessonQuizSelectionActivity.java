@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -194,18 +196,48 @@ public class LessonQuizSelectionActivity extends AppCompatActivity implements Re
 
                         int endIndex = Math.min(startIndex + 3, allDocuments.size());
 
-                        int topicIndex = 1;
-
                         for (int i = startIndex; i < endIndex; i++) {
                             QueryDocumentSnapshot document = allDocuments.get(i);
                             String lessonID = document.getString("id");
                             String lessonName = document.getString("name");
 
                             if (lessonID != null && lessonName != null) {
-                                lessonQuizList.add(new LessonQuizHeader(lessonName));
+                                LessonQuizHeader header = new LessonQuizHeader(lessonName);
+
+                                // Ավելացրու header-ը ցուցակում, հետո բեռնի progress-ը Firestore-ից և update արա
+                                lessonQuizList.add(header);
                                 lessonQuizList.add(new LessonQuizContent(lessonID, "Тема", "lesson"));
                                 lessonQuizList.add(new LessonQuizContent(lessonID, "Викторина", "quiz"));
-                                topicIndex++;
+
+                                // Fetch user's quiz result for this lesson
+                                db.collection("quizResults")
+                                        .whereEqualTo("userId", user.getUid())
+                                        .whereEqualTo("quizId", "quiz" + lessonID)
+                                        .get()
+                                        .addOnSuccessListener(resultTask -> {
+                                            int scorePercent = -1;
+                                            Log.d("QUIZ_PROGRESS", "CHECKING FOR userId=" + user.getUid() + " quizId=" + lessonID);
+
+                                            if (!resultTask.isEmpty()) {
+                                                DocumentSnapshot quizResult = resultTask.getDocuments().get(0);
+                                                Log.d("QUIZ_PROGRESS", "quizResult data: " + quizResult.getData());
+
+                                                Long score = quizResult.getLong("score");
+                                                int maxScore = 10; // կամ ըստ քո քվիզի հարցերի քանակի
+                                                if (score != null && maxScore > 0) {
+                                                    scorePercent = (int) ((score * 10) / maxScore);
+                                                }
+                                                // Log score և հաշվարկված տոկոսը
+                                                Log.d("QUIZ_PROGRESS", "score: " + score + ", scorePercent: " + scorePercent);
+                                            } else {
+                                                // Եթե resultTask.isEmpty() է
+                                                Log.d("QUIZ_PROGRESS", "NO RESULT FOUND for userId=" + user.getUid() + " quizId=" + lessonID);
+                                            }
+                                            Log.d("QUIZ_PROGRESS", "QUIZRESULT FOR " + header.getTitle() + ": " + scorePercent);
+
+                                            header.setProgress(scorePercent);
+                                            adapter.notifyDataSetChanged();
+                                        });
                             }
                         }
                         adapter.notifyDataSetChanged();
