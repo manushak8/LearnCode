@@ -15,8 +15,10 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
         <ImageView
+            android:id="@+id/profileImage"
             android:layout_width="@dimen/_80sdp"
             android:layout_height="@dimen/_80sdp"
+            android:scaleType="centerCrop"
             android:src="@drawable/baseline_person_24" />
 
 

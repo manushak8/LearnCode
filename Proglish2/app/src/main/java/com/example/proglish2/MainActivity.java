@@ -2,6 +2,9 @@ package com.example.proglish2;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
@@ -10,6 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -22,6 +28,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements RecyclerViewInterface{
@@ -30,9 +39,10 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
     FirebaseAuth auth;
     FirebaseUser user;
     DrawerLayout drawerLayout;
-    ImageView menu;
+    ImageView menu, profileImage;
     LinearLayout home, dictionary, leaderboard, about, logout;
     TextView mail;
+    private ActivityResultLauncher<String> pickImageLauncher;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
         home = findViewById(R.id.home);
         leaderboard = findViewById(R.id.leaderboard);
         mail = findViewById(R.id.userEmail);
+        profileImage = findViewById(R.id.profileImage);
 
         if (user == null){
             Intent intent = new Intent(getApplicationContext(), login.class);
@@ -71,6 +82,57 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
                 }
             }
 
+            Bitmap profileBitmap = loadProfileImageFromInternalStorage();
+            if (profileBitmap != null) {
+                profileImage.setImageBitmap(profileBitmap);
+            }
+
+            pickImageLauncher = registerForActivityResult(
+                    new ActivityResultContracts.GetContent(),
+                    new ActivityResultCallback<Uri>() {
+                        @Override
+                        public void onActivityResult(Uri uri) {
+                            if (uri != null) {
+                                try {
+                                    InputStream inputStream = getContentResolver().openInputStream(uri);
+                                    Bitmap originalBitmap = BitmapFactory.decodeStream(inputStream);
+                                    inputStream.close();
+
+                                    if (originalBitmap != null) {
+                                        int width = originalBitmap.getWidth();
+                                        int height = originalBitmap.getHeight();
+                                        int newEdge = Math.min(width, height);
+                                        int xOffset = (width - newEdge) / 2;
+                                        int yOffset = (height - newEdge) / 2;
+                                        Bitmap squareBitmap = Bitmap.createBitmap(
+                                                originalBitmap, xOffset, yOffset, newEdge, newEdge
+                                        );
+
+                                        float density = getResources().getDisplayMetrics().density;
+                                        int sizePx = (int) (80 * density);
+
+                                        Bitmap scaledBitmap = Bitmap.createScaledBitmap(
+                                                squareBitmap, sizePx, sizePx, true
+                                        );
+                                        profileImage.setImageBitmap(scaledBitmap);
+
+                                        saveProfileImageToInternalStorage(scaledBitmap);
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    }
+            );
+
+            profileImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    pickImageLauncher.launch("image/*");
+                }
+            });
+
             menu.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -88,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
             about.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(MainActivity.this, LeaderboardActivity.class); //change to About activity
+                    Intent intent = new Intent(MainActivity.this, AboutActivity.class);
                     startActivity(intent);
                 }
             });
@@ -175,5 +237,28 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
     protected void onPause() {
         super.onPause();
         closeDrawer(drawerLayout);
+    }
+
+    // Նկարը պահելու ֆունկցիա
+    private void saveProfileImageToInternalStorage(Bitmap bitmap) {
+        try {
+            FileOutputStream fos = openFileOutput("profile_image.png", MODE_PRIVATE);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Նկարը բեռնելու ֆունկցիա
+    private Bitmap loadProfileImageFromInternalStorage() {
+        try {
+            FileInputStream fis = openFileInput("profile_image.png");
+            Bitmap bitmap = BitmapFactory.decodeStream(fis);
+            fis.close();
+            return bitmap;
+        } catch (Exception e) {
+            return null;
+        }
     }
 }
