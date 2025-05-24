@@ -16,4 +16,8 @@ public class LeaderboardEntry {
     public int getScore() {
         return score;
     }
+
+    public void setScore(int newScore) {
+        this.score = newScore;
+    }
 }

@@ -1,170 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/main_scroll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#2C43B8"
-    android:orientation="vertical"
+    android:fillViewport="true"
     tools:context=".DashboardActivity">
 
-    <!-- Header with Exit Button -->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_35sdp"
-        android:background="@drawable/toolbar_gradient">
-
-        <TextView
-            android:id="@+id/exit_ic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/exit"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/_10sdp"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_15sdp"
-            android:clickable="true"
-            android:focusable="true"/>
-    </RelativeLayout>
-
-    <!-- Question Card -->
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_80sdp"
-        app:cardCornerRadius="@dimen/_15sdp"
-        app:cardElevation="@dimen/_4sdp"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginEnd="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:background="@color/white">
-
-        <TextView
-            android:id="@+id/card_question"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:padding="@dimen/_10sdp"
-            android:textSize="@dimen/_18sdp"
-            android:gravity="center"
-            android:text="q"
-            android:textColor="@color/black"
-            android:textStyle="bold">
-        </TextView>
-    </androidx.cardview.widget.CardView>
-
-    <!-- Options -->
     <LinearLayout
+        android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="@dimen/_20sdp">
+        android:orientation="vertical">
 
-        <!-- Option A -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardA"
-            android:onClick="optionAClick"
+        <!-- Header with Exit Button -->
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp"
-            app:cardCornerRadius="@dimen/_10sdp"
-            app:cardElevation="@dimen/_4sdp"
-            android:layout_margin="@dimen/_10sdp"
-            android:gravity="center">
+            android:layout_height="@dimen/_35sdp"
+            android:background="@drawable/toolbar_gradient">
 
             <TextView
-                android:id="@+id/card_answerA"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_16sdp"
-                android:text="A" />
-        </androidx.cardview.widget.CardView>
+                android:id="@+id/exit_ic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/exit"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_15sdp"
+                android:clickable="true"
+                android:focusable="true"/>
+        </RelativeLayout>
 
-        <!-- Option B -->
+        <!-- Question Card -->
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardB"
-            android:onClick="optionBClick"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp"
-            app:cardCornerRadius="@dimen/_10sdp"
+            android:layout_height="@dimen/_80sdp"
+            app:cardCornerRadius="@dimen/_15sdp"
             app:cardElevation="@dimen/_4sdp"
-            android:layout_margin="@dimen/_10sdp"
-            android:gravity="center">
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:background="@color/white">
 
             <TextView
-                android:id="@+id/card_answerB"
+                android:id="@+id/card_question"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="@dimen/_10sdp"
+                android:textSize="@dimen/_18sdp"
                 android:gravity="center"
+                android:text="q"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_16sdp"
-                android:text="B" />
+                android:textStyle="bold"/>
         </androidx.cardview.widget.CardView>
 
-
-        <!-- Option C -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardC"
-            android:onClick="optionCClick"
+        <!-- Options -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp"
-            app:cardCornerRadius="@dimen/_10sdp"
-            app:cardElevation="@dimen/_4sdp"
-            android:layout_margin="@dimen/_10sdp"
-            android:gravity="center">
-
-            <TextView
-                android:id="@+id/card_answerC"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_16sdp"
-                android:text="C" />
-        </androidx.cardview.widget.CardView>
-
-        <!-- Option D -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardD"
-            android:onClick="optionDClick"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp"
-            app:cardCornerRadius="@dimen/_10sdp"
-            app:cardElevation="@dimen/_4sdp"
-            android:layout_margin="@dimen/_10sdp"
-            android:gravity="center">
-
-            <TextView
-                android:id="@+id/card_answerD"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_16sdp"
-                android:text="D"/>
-        </androidx.cardview.widget.CardView>
-    </LinearLayout>
-
-    <!-- Next Button -->
-    <LinearLayout
-        android:id="@+id/next_btn"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_50sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginStart="@dimen/_35sdp"
-        android:layout_marginEnd="@dimen/_35sdp"
-        android:gravity="center"
-        android:background="@drawable/next_btn_shape">
-
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/next"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_20sdp"
-            android:layout_gravity="center"
-            android:textAllCaps="true"/>
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/_20sdp">
+
+            <!-- Option A -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardA"
+                android:onClick="optionAClick"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                app:cardCornerRadius="@dimen/_10sdp"
+                app:cardElevation="@dimen/_4sdp"
+                android:layout_margin="@dimen/_10sdp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/card_answerA"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_16sdp"
+                    android:text="A" />
+            </androidx.cardview.widget.CardView>
+
+            <!-- Option B -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardB"
+                android:onClick="optionBClick"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                app:cardCornerRadius="@dimen/_10sdp"
+                app:cardElevation="@dimen/_4sdp"
+                android:layout_margin="@dimen/_10sdp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/card_answerB"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_16sdp"
+                    android:text="B" />
+            </androidx.cardview.widget.CardView>
+
+            <!-- Option C -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardC"
+                android:onClick="optionCClick"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                app:cardCornerRadius="@dimen/_10sdp"
+                app:cardElevation="@dimen/_4sdp"
+                android:layout_margin="@dimen/_10sdp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/card_answerC"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_16sdp"
+                    android:text="C" />
+            </androidx.cardview.widget.CardView>
+
+            <!-- Option D -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardD"
+                android:onClick="optionDClick"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                app:cardCornerRadius="@dimen/_10sdp"
+                app:cardElevation="@dimen/_4sdp"
+                android:layout_margin="@dimen/_10sdp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/card_answerD"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_16sdp"
+                    android:text="D"/>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+        <!-- Next Button -->
+        <LinearLayout
+            android:id="@+id/next_btn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_35sdp"
+            android:layout_marginEnd="@dimen/_35sdp"
+            android:gravity="center"
+            android:background="@drawable/next_btn_shape">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/next"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_20sdp"
+                android:layout_gravity="center"
+                android:textAllCaps="true"/>
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</ScrollView>

@@ -21,9 +21,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class LeaderboardActivity extends AppCompatActivity {
     private RecyclerView leaderboardRecyclerView;
@@ -117,19 +120,40 @@ public class LeaderboardActivity extends AppCompatActivity {
     private void fetchLeaderboardData() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        db.collection("Leaderboard")
-                .orderBy("score", Query.Direction.DESCENDING)
+        db.collection("quizResults")
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful() && task.getResult() != null) {
                         leaderboardEntries.clear();
+                        Map<String, LeaderboardEntry> userTotals = new HashMap<>();
 
-                        task.getResult().forEach(document -> {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
                             String userEmail = document.getString("userEmail");
-                            long totalScore = document.getLong("score");
+                            String userId = document.getString("userId");
+                            Object scoreObj = document.get("score");
+                            int score = 0;
 
-                            leaderboardEntries.add(new LeaderboardEntry(userEmail, (int) totalScore));
-                        });
+                            if (scoreObj instanceof Long) {
+                                score = ((Long) scoreObj).intValue();
+                            } else if (scoreObj instanceof Double) {
+                                score = ((Double) scoreObj).intValue();
+                            } else if (scoreObj instanceof Integer) {
+                                score = (Integer) scoreObj;
+                            }
+
+                            if (userId == null || userEmail == null) continue;
+
+                            if (!userTotals.containsKey(userId)) {
+                                userTotals.put(userId, new LeaderboardEntry(userEmail, score));
+                            } else {
+                                LeaderboardEntry entry = userTotals.get(userId);
+                                entry.setScore(entry.getScore() + score);
+                            }
+                        }
+
+                        leaderboardEntries.addAll(userTotals.values());
+
+                        leaderboardEntries.sort((a, b) -> b.getScore() - a.getScore());
 
                         leaderboardAdapter.notifyDataSetChanged();
                     } else {

@@ -100,7 +100,7 @@ public class DashboardActivity extends AppCompatActivity {
                 });
     }
 
-    private void saveQuizResultToFirebase() {
+    private void saveQuizResultToFirebase(String quizId) {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         int totalScore = correctCount * 10;
@@ -108,12 +108,12 @@ public class DashboardActivity extends AppCompatActivity {
         Map<String, Object> result = new HashMap<>();
         result.put("userId", userId);
         result.put("userEmail", userEmail);
+        result.put("quizId", quizId);
         result.put("score", totalScore);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Leaderboard")
-                .document(userId)
-                .set(result)
+        db.collection("quizResults")
+                .add(result)
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(this, "Result saved successfully!", Toast.LENGTH_SHORT).show();
                 })
@@ -170,6 +170,7 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     private void optionClick(CardView selectedCard, String selectedAnswer) {
+        String quizId = getIntent().getStringExtra("quizId");
         disableBtn();
         nextBtn.setEnabled(true);
         nextBtn.setClickable(true);
@@ -193,7 +194,7 @@ public class DashboardActivity extends AppCompatActivity {
                 Intent intent = new Intent(DashboardActivity.this, WonActivity.class);
                 intent.putExtra("correct", correctCount);
                 intent.putExtra("wrong", wrongCount);
-                saveQuizResultToFirebase();
+                saveQuizResultToFirebase("quiz" + quizId);
                 startActivity(intent);
                 finish();
             }
