@@ -204,7 +204,6 @@ public class LessonQuizSelectionActivity extends AppCompatActivity implements Re
                             if (lessonID != null && lessonName != null) {
                                 LessonQuizHeader header = new LessonQuizHeader(lessonName);
 
-                                // Ավելացրու header-ը ցուցակում, հետո բեռնի progress-ը Firestore-ից և update արա
                                 lessonQuizList.add(header);
                                 lessonQuizList.add(new LessonQuizContent(lessonID, "Тема", "lesson"));
                                 lessonQuizList.add(new LessonQuizContent(lessonID, "Викторина", "quiz"));
@@ -216,24 +215,18 @@ public class LessonQuizSelectionActivity extends AppCompatActivity implements Re
                                         .get()
                                         .addOnSuccessListener(resultTask -> {
                                             int scorePercent = -1;
-                                            Log.d("QUIZ_PROGRESS", "CHECKING FOR userId=" + user.getUid() + " quizId=" + lessonID);
 
                                             if (!resultTask.isEmpty()) {
                                                 DocumentSnapshot quizResult = resultTask.getDocuments().get(0);
-                                                Log.d("QUIZ_PROGRESS", "quizResult data: " + quizResult.getData());
 
                                                 Long score = quizResult.getLong("score");
-                                                int maxScore = 10; // կամ ըստ քո քվիզի հարցերի քանակի
+                                                int maxScore = 10;
                                                 if (score != null && maxScore > 0) {
                                                     scorePercent = (int) ((score * 10) / maxScore);
                                                 }
-                                                // Log score և հաշվարկված տոկոսը
-                                                Log.d("QUIZ_PROGRESS", "score: " + score + ", scorePercent: " + scorePercent);
                                             } else {
-                                                // Եթե resultTask.isEmpty() է
                                                 Log.d("QUIZ_PROGRESS", "NO RESULT FOUND for userId=" + user.getUid() + " quizId=" + lessonID);
                                             }
-                                            Log.d("QUIZ_PROGRESS", "QUIZRESULT FOR " + header.getTitle() + ": " + scorePercent);
 
                                             header.setProgress(scorePercent);
                                             adapter.notifyDataSetChanged();
