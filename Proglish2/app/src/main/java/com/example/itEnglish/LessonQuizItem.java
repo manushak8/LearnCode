@@ -1,4 +1,4 @@
-package com.example.proglish2;
+package com.example.itEnglish;
 
 public abstract class LessonQuizItem {
     public static final int TYPE_HEADER = 0;

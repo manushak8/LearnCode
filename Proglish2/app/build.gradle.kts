@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.proglish2"
+    namespace = "com.example.itEnglish"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.proglish2"
+        applicationId = "com.example.itEnglish"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

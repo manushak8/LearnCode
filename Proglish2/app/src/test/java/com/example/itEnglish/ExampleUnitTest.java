@@ -1,4 +1,4 @@
-package com.example.proglish2;
+package com.example.itEnglish;
 
 import org.junit.Test;
 
